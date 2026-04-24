@@ -25,6 +25,9 @@ export class customer extends BaseTable {
   @Column({ default: 0 })
   total_invoices: number;
 
+  @Column({ type: "decimal", precision: 12, scale: 2, default: 0, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
+  current_balance: number;
+
   @Column({ type: "timestamp", nullable: true })
   last_visit: Date;
 

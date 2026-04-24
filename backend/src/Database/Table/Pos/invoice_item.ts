@@ -38,4 +38,13 @@ export class invoice_item extends BaseTable {
 
   @Column({ type: "decimal", precision: 10, scale: 2, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
   total_price: number;
+
+  @Column({ default: "PERCENTAGE" })
+  discount_type: string;
+
+  @Column({ type: "decimal", precision: 10, scale: 2, default: 0, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
+  discount_value: number;
+
+  @Column({ type: "decimal", precision: 10, scale: 2, default: 0, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
+  discount_amount: number;
 }

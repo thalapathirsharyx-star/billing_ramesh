@@ -57,4 +57,36 @@ export class AnalyticsController extends JWTAuthController {
     const data = await this._AnalyticsService.GetStockSummary(storeId);
     return this.SendResponseData(data);
   }
+
+  @Get('LowStock')
+  async LowStock(@Query('storeId') storeId: string) {
+    const data = await this._AnalyticsService.GetLowStockReport(storeId);
+    return this.SendResponseData(data);
+  }
+
+  @Get('CategoryReport')
+  async CategoryReport(
+    @Query('storeId') storeId: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string
+  ) {
+    const data = await this._AnalyticsService.GetCategoryReport(
+      storeId, 
+      new Date(startDate), 
+      new Date(endDate)
+    );
+    return this.SendResponseData(data);
+  }
+
+  @Get('BatchReport')
+  async BatchReport(@Query('storeId') storeId: string) {
+    const data = await this._AnalyticsService.GetBatchReport(storeId);
+    return this.SendResponseData(data);
+  }
+
+  @Get('SerialReport')
+  async SerialReport(@Query('storeId') storeId: string) {
+    const data = await this._AnalyticsService.GetSerialReport(storeId);
+    return this.SendResponseData(data);
+  }
 }

@@ -51,7 +51,8 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
   {
     label: "Analysis & Reports",
     items: nav.filter(item => [
-      "Reports", "Bill Profit", "Business P&L", "Item Performance", "Stock Valuation"
+      "Bill Profit", "Business P&L", "Item Performance", "Stock Valuation",
+      "Low Stock", "Category Report", "Batch Tracking", "Serial Tracking"
     ].includes(item.name ?? ""))
   },
   {

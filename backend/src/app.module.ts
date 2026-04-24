@@ -55,15 +55,22 @@ import { ProductCategoryController } from "./Controller/Pos/ProductCategory.cont
 import { ProductSizeController } from "./Controller/Pos/ProductSize.controller";
 import { ProductCategoryService } from "./Service/Pos/ProductCategory.service";
 import { ProductSizeService } from "./Service/Pos/ProductSize.service";
+import { ProductSizeService } from "./Service/Pos/ProductSize.service";
 import { AnalyticsController } from "./Controller/Pos/Analytics.controller";
 import { AnalyticsService } from "./Service/Pos/Analytics.service";
+import { BankController } from "./Controller/Pos/Bank.controller";
+import { BankService } from "./Service/Pos/Bank.service";
+import { ExpenseController } from "./Controller/Pos/Expense.controller";
+import { ExpenseService } from "./Service/Pos/Expense.service";
+import { CustomerLedgerController } from "./Controller/Pos/CustomerLedger.controller";
+import { CustomerLedgerService } from "./Service/Pos/CustomerLedger.service";
 
 @Module({
   imports: [
     ClsModule,
     ServeStaticModule.forRoot({
       rootPath: __dirname + "/client",
-      exclude: ["/api/*", "swagger"],
+      exclude: ["/api/(.*)", "/swagger/(.*)"],
     }),
     EventEmitterModule.forRoot({ maxListeners: 0 }),
     ConfigModule.forRoot({ isGlobal: true, load: [Configuration] }),
@@ -124,6 +131,9 @@ import { AnalyticsService } from "./Service/Pos/Analytics.service";
     ProductCategoryController,
     ProductSizeController,
     AnalyticsController,
+    BankController,
+    ExpenseController,
+    CustomerLedgerController,
   ],
   providers: [
     AuthService,
@@ -148,6 +158,9 @@ import { AnalyticsService } from "./Service/Pos/Analytics.service";
     ProductCategoryService,
     ProductSizeService,
     AnalyticsService,
+    BankService,
+    ExpenseService,
+    CustomerLedgerService,
     {
       provide: APP_FILTER,
       useClass: ExceptionHelper,

@@ -6,6 +6,8 @@ export interface CartItem {
   quantity: number;
   price: number;
   gst_percentage: number;
+  discount_type?: 'PERCENTAGE' | 'FIXED';
+  discount_value?: number;
 }
 
 interface CartContextType {
@@ -13,6 +15,7 @@ interface CartContextType {
   addItem: (product: any, quantity: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
+  updateDiscount: (productId: string, type: 'PERCENTAGE' | 'FIXED', value: number) => void;
   clearCart: () => void;
   subtotal: number;
   taxAmount: number;
@@ -37,7 +40,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         name: product.name, 
         quantity, 
         price: product.selling_price, 
-        gst_percentage: product.gst_percentage 
+        gst_percentage: product.gst_percentage,
+        discount_type: 'PERCENTAGE',
+        discount_value: 0
       }];
     });
   };
@@ -52,11 +57,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ));
   };
 
+  const updateDiscount = (productId: string, type: 'PERCENTAGE' | 'FIXED', value: number) => {
+    setItems(prev => prev.map(item => 
+      item.id === productId ? { ...item, discount_type: type, discount_value: value } : item
+    ));
+  };
+
   const clearCart = () => setItems([]);
 
   const { subtotal, taxAmount, totalAmount } = useMemo(() => {
-    const sub = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    const tax = items.reduce((acc, item) => acc + (item.price * item.quantity * item.gst_percentage / 100), 0);
+    const sub = items.reduce((acc, item) => {
+      let itemDiscount = 0;
+      if (item.discount_value) {
+        if (item.discount_type === 'PERCENTAGE') {
+          itemDiscount = (item.price * item.quantity * item.discount_value) / 100;
+        } else {
+          itemDiscount = item.discount_value;
+        }
+      }
+      return acc + (item.price * item.quantity) - itemDiscount;
+    }, 0);
+
+    const tax = items.reduce((acc, item) => {
+      let itemDiscount = 0;
+      if (item.discount_value) {
+        if (item.discount_type === 'PERCENTAGE') {
+          itemDiscount = (item.price * item.quantity * item.discount_value) / 100;
+        } else {
+          itemDiscount = item.discount_value;
+        }
+      }
+      const discountedSubtotal = (item.price * item.quantity) - itemDiscount;
+      return acc + (discountedSubtotal * item.gst_percentage / 100);
+    }, 0);
+
     return {
       subtotal: sub,
       taxAmount: tax,

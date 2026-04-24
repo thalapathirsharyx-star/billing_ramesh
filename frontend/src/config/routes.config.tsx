@@ -29,5 +29,9 @@ export const BillProfitPage = lazy(() => import("@/pages/reports/BillProfitPage"
 export const BusinessPNLPage = lazy(() => import("@/pages/reports/BusinessPNLPage"));
 export const ItemProfitPage = lazy(() => import("@/pages/reports/ItemProfitPage"));
 export const StockSummaryPage = lazy(() => import("@/pages/reports/StockSummaryPage"));
+export const LowStockPage = lazy(() => import("@/pages/reports/LowStockPage"));
+export const CategoryReportPage = lazy(() => import("@/pages/reports/CategoryReportPage"));
+export const BatchReportPage = lazy(() => import("@/pages/reports/BatchReportPage"));
+export const SerialReportPage = lazy(() => import("@/pages/reports/SerialReportPage"));
 
 export const Settings = lazy(() => import("@/pages/Settings"));

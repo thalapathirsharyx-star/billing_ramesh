@@ -157,6 +157,18 @@ function Router() {
         <Route path="/reports/stock-summary">
           <AppRoute component={Routes.StockSummaryPage} />
         </Route>
+        <Route path="/reports/low-stock">
+          <AppRoute component={Routes.LowStockPage} />
+        </Route>
+        <Route path="/reports/category">
+          <AppRoute component={Routes.CategoryReportPage} />
+        </Route>
+        <Route path="/reports/batch">
+          <AppRoute component={Routes.BatchReportPage} />
+        </Route>
+        <Route path="/reports/serial">
+          <AppRoute component={Routes.SerialReportPage} />
+        </Route>
 
         {/* Catch-all */}
         <Route path="*">

@@ -13,22 +13,38 @@ import {
 } from "@/components/ui/select";
 import { InvoiceService } from '@/service/invoice.service';
 import { CustomerService } from '@/service/customer.service';
+import { BankService } from '@/service/bank.service';
 import { useAuth } from '@/lib/auth';
 import { toast } from 'sonner';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { CreditCard, Wallet, Banknote, ReceiptText } from 'lucide-react';
+import { CreditCard, Wallet, Banknote, ReceiptText, Building2, Smartphone } from 'lucide-react';
 
 const Checkout: React.FC = () => {
   const { items, subtotal, taxAmount, totalAmount, clearCart } = useCart();
   const [discount, setDiscount] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState('Cash');
+  const [bankAccountId, setBankAccountId] = useState('');
+  const [upiReference, setUpiReference] = useState('');
+  const [paidAmount, setPaidAmount] = useState<number | null>(null);
+  const [banks, setBanks] = useState<any[]>([]);
   const [phone, setPhone] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [customer, setCustomer] = useState<any>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const { user } = useAuth();
+
+  React.useEffect(() => {
+    const fetchBanks = async () => {
+      const storeId = (user as any)?.company?.id;
+      if (storeId) {
+        const res = await BankService.GetAll(storeId);
+        setBanks(res.result || []);
+      }
+    };
+    fetchBanks();
+  }, [user]);
 
   const handlePhoneChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -171,13 +187,18 @@ const Checkout: React.FC = () => {
         customer_name: customerName || undefined,
         store_id: storeId,
         payment_method: paymentMethod,
+        bank_account_id: bankAccountId || undefined,
+        upi_reference: upiReference || undefined,
+        paid_amount: paidAmount !== null ? paidAmount : finalTotal,
         discount_percentage: discount,
         discount_amount: discountAmount,
         items: items.map(item => ({
           product_id: item.id,
           quantity: item.quantity,
           unit_price: item.price,
-          gst_percentage: item.gst_percentage
+          gst_percentage: item.gst_percentage,
+          discount_type: item.discount_type,
+          discount_value: item.discount_value
         }))
       };
 
@@ -190,6 +211,9 @@ const Checkout: React.FC = () => {
       setCustomer(null);
       setDiscount(0);
       setDiscountAmount(0);
+      setBankAccountId('');
+      setUpiReference('');
+      setPaidAmount(null);
     } catch (err: any) {
       toast.error(err.message || "Checkout failed");
     } finally {
@@ -266,6 +290,56 @@ const Checkout: React.FC = () => {
                 </button>
               ))}
             </div>
+          </div>
+
+          {(paymentMethod === 'UPI' || paymentMethod === 'Card') && (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
+              <div>
+                <Label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2 block">Settlement Bank</Label>
+                <Select value={bankAccountId} onValueChange={setBankAccountId}>
+                  <SelectTrigger className="rounded-xl bg-slate-50 border-slate-200">
+                    <SelectValue placeholder="Select Bank..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {banks.map(bank => (
+                      <SelectItem key={bank.id} value={bank.id}>{bank.bank_name} ({bank.account_number.slice(-4)})</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2 block">Transaction / UPI Ref</Label>
+                <div className="relative">
+                  <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                  <Input 
+                    placeholder="Enter Ref Number..." 
+                    value={upiReference}
+                    onChange={(e) => setUpiReference(e.target.value)}
+                    className="h-10 pl-10 rounded-xl bg-slate-50 border-slate-200 text-xs"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div>
+            <Label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-3 block">Payment Received</Label>
+            <div className="relative">
+              <Banknote className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
+              <Input 
+                type="number"
+                placeholder={`Full Amount (₹${finalTotal.toLocaleString()})`}
+                value={paidAmount || ''}
+                onChange={(e) => setPaidAmount(parseFloat(e.target.value) || 0)}
+                className="h-12 pl-12 rounded-xl bg-slate-50 border-slate-200 font-black text-lg focus:bg-white"
+              />
+            </div>
+            {paidAmount !== null && paidAmount < finalTotal && (
+              <p className="text-[10px] text-amber-600 font-bold mt-2 uppercase tracking-wider flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                Remaining ₹{(finalTotal - paidAmount).toLocaleString()} will be added to Customer Credit
+              </p>
+            )}
           </div>
 
 

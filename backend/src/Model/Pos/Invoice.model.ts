@@ -22,6 +22,19 @@ export class InvoiceItemModel {
   @IsNumber()
   @ApiProperty()
   gst_percentage: number;
+
+  @IsOptional()
+  @IsArray()
+  @ApiProperty({ required: false, type: [String] })
+  serial_numbers?: string[];
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  discount_type?: string;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  discount_value?: number;
 }
 
 export class CreateInvoiceModel {
@@ -36,6 +49,18 @@ export class CreateInvoiceModel {
   @IsNotEmpty()
   @ApiProperty()
   payment_method: string;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  bank_account_id?: string;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  upi_reference?: string;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  paid_amount?: number;
 
   @IsOptional()
   @ApiProperty({ required: false })
