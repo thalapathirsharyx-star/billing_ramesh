@@ -25,4 +25,9 @@ export const InvoicesPage = lazy(() => import("@/pages/invoices/InvoicesPage"));
 export const CategoriesPage = lazy(() => import("@/pages/inventory/CategoriesPage"));
 export const SizesPage = lazy(() => import("@/pages/inventory/SizesPage"));
 
+export const BillProfitPage = lazy(() => import("@/pages/reports/BillProfitPage"));
+export const BusinessPNLPage = lazy(() => import("@/pages/reports/BusinessPNLPage"));
+export const ItemProfitPage = lazy(() => import("@/pages/reports/ItemProfitPage"));
+export const StockSummaryPage = lazy(() => import("@/pages/reports/StockSummaryPage"));
+
 export const Settings = lazy(() => import("@/pages/Settings"));

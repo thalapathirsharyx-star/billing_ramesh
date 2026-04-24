@@ -145,6 +145,18 @@ function Router() {
         <Route path="/sizes">
           <AppRoute component={Routes.SizesPage} />
         </Route>
+        <Route path="/reports/bill-profit">
+          <AppRoute component={Routes.BillProfitPage} />
+        </Route>
+        <Route path="/reports/pnl">
+          <AppRoute component={Routes.BusinessPNLPage} />
+        </Route>
+        <Route path="/reports/item-profit">
+          <AppRoute component={Routes.ItemProfitPage} />
+        </Route>
+        <Route path="/reports/stock-summary">
+          <AppRoute component={Routes.StockSummaryPage} />
+        </Route>
 
         {/* Catch-all */}
         <Route path="*">

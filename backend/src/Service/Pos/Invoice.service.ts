@@ -59,6 +59,7 @@ export class InvoiceService {
         invItem.product_id = itemData.product_id;
         invItem.quantity = itemData.quantity;
         invItem.unit_price = itemData.unit_price;
+        invItem.purchase_price = prod.purchase_price || 0;
         invItem.gst_percentage = itemData.gst_percentage;
         invItem.gst_amount = itemTax;
         invItem.total_price = itemSubtotal + itemTax;

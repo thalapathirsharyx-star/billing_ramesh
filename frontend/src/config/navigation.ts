@@ -9,6 +9,7 @@ import {
   PieChart,
   Layers,
   Ruler,
+  TrendingUp,
 } from "lucide-react";
 
 export const allNavigation = [
@@ -20,6 +21,10 @@ export const allNavigation = [
   { name: "Customers", href: "/customers", icon: Users },
   { name: "Inventory", href: "/inventory", icon: Warehouse },
   { name: "Reports", href: "/reports", icon: PieChart },
+  { name: "Bill Profit", href: "/reports/bill-profit", icon: ScrollText },
+  { name: "Business P&L", href: "/reports/pnl", icon: PieChart },
+  { name: "Item Performance", href: "/reports/item-profit", icon: TrendingUp },
+  { name: "Stock Valuation", href: "/reports/stock-summary", icon: Warehouse },
   { name: "Invoice Center", href: "/invoices", icon: ScrollText },
 ];
 

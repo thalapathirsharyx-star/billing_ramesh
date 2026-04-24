@@ -27,6 +27,9 @@ export class invoice_item extends BaseTable {
   @Column({ type: "decimal", precision: 10, scale: 2, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
   unit_price: number;
 
+  @Column({ type: "decimal", precision: 10, scale: 2, default: 0, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
+  purchase_price: number;
+
   @Column({ type: "decimal", precision: 5, scale: 2, transformer: { to: (v) => v, from: (v) => parseFloat(v) } })
   gst_percentage: number;
 
