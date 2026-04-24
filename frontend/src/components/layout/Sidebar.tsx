@@ -45,7 +45,7 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
   {
     label: "POS & Billing",
     items: nav.filter(item => [
-      "POS Terminal", "Products", "Customers", "Inventory", "Reports", "Invoice Center"
+      "POS Terminal", "Products", "Categories", "Sizes", "Customers", "Inventory", "Reports", "Invoice Center"
     ].includes(item.name ?? ""))
   },
   {

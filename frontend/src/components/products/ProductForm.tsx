@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -20,7 +20,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Plus, Trash2 } from 'lucide-react';
+import { CategoryService } from '@/service/category.service';
+import { SizeService } from '@/service/size.service';
+import { useAuth } from '@/lib/auth';
 
 const productSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -29,7 +39,7 @@ const productSchema = z.object({
   purchase_price: z.number().min(0),
   selling_price: z.number().min(0),
   gst_percentage: z.number().min(0).max(100),
-  category: z.string().optional(),
+  category: z.string().min(1, "Category is required"),
   color: z.string().optional(),
   variants: z.array(z.object({
     size: z.string().min(1, "Size is required"),
@@ -45,6 +55,10 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onSubmit }) => {
+  const { user } = useAuth();
+  const [categories, setCategories] = useState<any[]>([]);
+  const [sizes, setSizes] = useState<any[]>([]);
+
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -64,6 +78,29 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
     control: form.control,
     name: "variants",
   });
+
+  useEffect(() => {
+    const fetchMasters = async () => {
+      try {
+        const storeId = (user as any)?.company?.id;
+        if (!storeId) return;
+
+        const [catData, sizeData] = await Promise.all([
+          CategoryService.GetList(storeId),
+          SizeService.GetList(storeId)
+        ]);
+
+        setCategories(Array.isArray(catData) ? catData : (catData?.data ?? []));
+        setSizes(Array.isArray(sizeData) ? sizeData : (sizeData?.data ?? []));
+      } catch (err) {
+        console.error("Failed to fetch masters:", err);
+      }
+    };
+
+    if (isOpen && user) {
+      fetchMasters();
+    }
+  }, [isOpen, user]);
 
   useEffect(() => {
     if (product) {
@@ -205,9 +242,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Category</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. Men's Wear" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} />
-                    </FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-12 rounded-2xl bg-slate-50 border-slate-100">
+                          <SelectValue placeholder="Select Category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat.id} value={cat.name}>{cat.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -235,9 +281,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                         name={`variants.${index}.size`}
                         render={({ field }) => (
                           <FormItem className="flex-1">
-                            <FormControl>
-                              <Input placeholder="Size (XL, M, 32...)" className="h-11 rounded-xl bg-slate-50 border-slate-100" {...field} />
-                            </FormControl>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="h-11 rounded-xl bg-slate-50 border-slate-100">
+                                  <SelectValue placeholder="Select Size" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {sizes.map((s) => (
+                                  <SelectItem key={s.id} value={s.name}>{s.name}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
