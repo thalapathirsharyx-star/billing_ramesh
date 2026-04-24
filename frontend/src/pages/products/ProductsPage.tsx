@@ -84,15 +84,38 @@ const ProductsPage: React.FC = () => {
         toast.error("Store ID missing. Please refresh the page.");
         return;
       }
-      const payload = { ...data, store_id: storeId };
+
+      const { variants, ...productBase } = data;
       
       if (editingProduct) {
+        // When editing, we just update the specific record
+        // Note: In this simple version, we assume variants[0] is the current product's size/qty
+        const payload = { 
+          ...productBase, 
+          size: variants[0].size,
+          quantity_in_stock: variants[0].quantity,
+          store_id: storeId 
+        };
         await ProductService.Update(editingProduct.id, payload);
         toast.success("Product updated");
       } else {
-        await ProductService.Insert(payload);
-        toast.success("Product added");
+        // When adding new, we create a separate entry for each size
+        const createPromises = variants.map((v: any) => {
+          const payload = {
+            ...productBase,
+            size: v.size,
+            quantity_in_stock: v.quantity,
+            barcode: variants.length > 1 ? `${productBase.barcode}-${v.size}` : productBase.barcode,
+            sku: variants.length > 1 ? `${productBase.sku}-${v.size}` : productBase.sku,
+            store_id: storeId
+          };
+          return ProductService.Insert(payload);
+        });
+
+        await Promise.all(createPromises);
+        toast.success(`${variants.length} products added successfully`);
       }
+
       setIsFormOpen(false);
       fetchProducts();
     } catch (err: any) {

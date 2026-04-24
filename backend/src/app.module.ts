@@ -51,6 +51,10 @@ import { ReportService } from "./Service/Pos/Report.service";
 import { PaymentService } from "./Service/Pos/Payment.service";
 import { DashboardController } from "./Controller/Pos/Dashboard.controller";
 import { DashboardService } from "./Service/Pos/Dashboard.service";
+import { ProductCategoryController } from "./Controller/Pos/ProductCategory.controller";
+import { ProductSizeController } from "./Controller/Pos/ProductSize.controller";
+import { ProductCategoryService } from "./Service/Pos/ProductCategory.service";
+import { ProductSizeService } from "./Service/Pos/ProductSize.service";
 
 @Module({
   imports: [
@@ -115,6 +119,8 @@ import { DashboardService } from "./Service/Pos/Dashboard.service";
     ReportController,
     PaymentController,
     DashboardController,
+    ProductCategoryController,
+    ProductSizeController,
   ],
   providers: [
     AuthService,
@@ -136,6 +142,8 @@ import { DashboardService } from "./Service/Pos/Dashboard.service";
     ReportService,
     PaymentService,
     DashboardService,
+    ProductCategoryService,
+    ProductSizeService,
     {
       provide: APP_FILTER,
       useClass: ExceptionHelper,

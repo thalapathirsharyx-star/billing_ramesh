@@ -7,12 +7,16 @@ import {
   Users,
   Warehouse,
   PieChart,
+  Layers,
+  Ruler,
 } from "lucide-react";
 
 export const allNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "POS Terminal", href: "/pos", icon: ShoppingCart },
   { name: "Products", href: "/products", icon: Shirt },
+  { name: "Categories", href: "/categories", icon: Layers },
+  { name: "Sizes", href: "/sizes", icon: Ruler },
   { name: "Customers", href: "/customers", icon: Users },
   { name: "Inventory", href: "/inventory", icon: Warehouse },
   { name: "Reports", href: "/reports", icon: PieChart },

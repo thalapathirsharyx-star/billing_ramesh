@@ -22,5 +22,7 @@ export const InventoryPage = lazy(() => import("@/pages/inventory/InventoryPage"
 export const ReportsPage = lazy(() => import("@/pages/reports/ReportsPage"));
 export const BusinessDashboard = lazy(() => import("@/pages/BusinessDashboard"));
 export const InvoicesPage = lazy(() => import("@/pages/invoices/InvoicesPage"));
+export const CategoriesPage = lazy(() => import("@/pages/inventory/CategoriesPage"));
+export const SizesPage = lazy(() => import("@/pages/inventory/SizesPage"));
 
 export const Settings = lazy(() => import("@/pages/Settings"));

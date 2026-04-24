@@ -268,20 +268,7 @@ const Checkout: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Amounts for Cash */}
-          {paymentMethod === 'Cash' && (
-            <div className="flex gap-2 animate-in fade-in slide-in-from-top-2">
-              {[100, 500, 2000].map(amt => (
-                <button 
-                  key={amt}
-                  className="flex-1 py-2 rounded-lg bg-slate-100 text-slate-600 text-[10px] font-bold hover:bg-slate-200"
-                  onClick={() => toast.info(`Suggested change for ₹${amt}: ₹${amt - finalTotal}`)}
-                >
-                  ₹{amt}
-                </button>
-              ))}
-            </div>
-          )}
+
 
           <div>
             <Label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-3 block">Special Discount</Label>

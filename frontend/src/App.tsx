@@ -139,6 +139,12 @@ function Router() {
         <Route path="/invoices">
           <AppRoute component={Routes.InvoicesPage} />
         </Route>
+        <Route path="/categories">
+          <AppRoute component={Routes.CategoriesPage} />
+        </Route>
+        <Route path="/sizes">
+          <AppRoute component={Routes.SizesPage} />
+        </Route>
 
         {/* Catch-all */}
         <Route path="*">

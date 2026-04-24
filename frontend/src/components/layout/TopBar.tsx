@@ -255,20 +255,7 @@ export function TopBar({ isAdmin = false }: { isAdmin?: boolean }) {
           </div> */}
         </div>
 
-        <div className="relative hidden md:block w-40 lg:w-48 xl:w-64 shrink-0">
-          <Button
-            variant="outline"
-            className="w-full justify-start text-sm text-muted-foreground glass-input pl-9 rounded-2xl border-[#f0e8e2] dark:border-[#f0e8e2]/20 relative h-10 shadow-[inner_0_1px_2px_rgba(255,255,255,0.1)] dark:shadow-[inner_0_1px_2px_rgba(255,255,255,0.05)] hover:bg-white/40 dark:hover:bg-white/10"
-            onClick={() => setOpenSearch(true)}
-          >
-            <Search className="absolute left-2.5 top-3 h-4 w-4" />
-            <span className="hidden lg:inline-flex">Search everything...</span>
-            <span className="inline-flex lg:hidden">Search...</span>
-            <kbd className="pointer-events-none absolute right-2.5 top-2.5 hidden h-5 select-none items-center gap-1 rounded border border-[#f0e8e2] dark:border-[#f0e8e2]/10 bg-muted/50 px-1.5 text-[10px] font-medium opacity-100 sm:flex dark:bg-black/50">
-              <span className="text-xs">⌘</span>K
-            </kbd>
-          </Button>
-        </div>
+
 
         <CommandDialog open={openSearch} onOpenChange={setOpenSearch}>
           <CommandInput placeholder="Type a command or search..." />
@@ -348,14 +335,7 @@ export function TopBar({ isAdmin = false }: { isAdmin?: boolean }) {
       </div>
 
       <div className="flex items-center gap-1 md:gap-4 shrink-0 px-1">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden text-muted-foreground hover:bg-white/20 dark:hover:bg-white/10 rounded-full h-9 w-9"
-          onClick={() => setOpenSearch(true)}
-        >
-          <Search className="h-5 w-5" />
-        </Button>
+
         {/* Theme Toggle */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

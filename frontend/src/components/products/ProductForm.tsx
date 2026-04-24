@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Plus, Trash2 } from 'lucide-react';
 
 const productSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -27,10 +29,12 @@ const productSchema = z.object({
   purchase_price: z.number().min(0),
   selling_price: z.number().min(0),
   gst_percentage: z.number().min(0).max(100),
-  quantity_in_stock: z.number().int().min(0),
   category: z.string().optional(),
-  size: z.string().optional(),
   color: z.string().optional(),
+  variants: z.array(z.object({
+    size: z.string().min(1, "Size is required"),
+    quantity: z.number().int().min(0)
+  })).min(1, "At least one size is required"),
 });
 
 interface ProductFormProps {
@@ -50,16 +54,23 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
       purchase_price: 0,
       selling_price: 0,
       gst_percentage: 12,
-      quantity_in_stock: 0,
       category: '',
-      size: '',
       color: '',
+      variants: [{ size: '', quantity: 0 }],
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "variants",
   });
 
   useEffect(() => {
     if (product) {
-      form.reset(product);
+      form.reset({
+        ...product,
+        variants: [{ size: product.size || '', quantity: product.quantity_in_stock || 0 }]
+      });
     } else {
       form.reset({
         name: '',
@@ -68,10 +79,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
         purchase_price: 0,
         selling_price: 0,
         gst_percentage: 12,
-        quantity_in_stock: 0,
         category: '',
-        size: '',
         color: '',
+        variants: [{ size: '', quantity: 0 }],
       });
     }
   }, [product, form, isOpen]);
@@ -82,38 +92,41 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl overflow-y-auto max-h-[90vh]">
+      <DialogContent className="max-w-2xl overflow-y-auto max-h-[90vh] rounded-[32px]">
         <DialogHeader>
-          <DialogTitle>{product ? 'Edit Product' : 'Add New Product'}</DialogTitle>
+          <DialogTitle className="text-2xl font-black text-slate-900">
+            {product ? 'Edit Product' : 'Add New Product'}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem className="col-span-2">
-                    <FormLabel>Product Name</FormLabel>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Product Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Cotton Blue Shirt" {...field} />
+                      <Input placeholder="e.g. Cotton Blue Shirt" className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:bg-white" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              
               <FormField
                 control={form.control}
                 name="barcode"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex justify-between items-center">
+                    <FormLabel className="flex justify-between items-center text-[10px] uppercase tracking-widest font-black text-slate-400">
                       Barcode
                       <Button 
                         type="button" 
                         variant="ghost" 
-                        size="xs" 
-                        className="h-6 text-[10px] font-bold uppercase tracking-wider text-primary hover:text-primary/80"
+                        size="sm" 
+                        className="h-6 text-[10px] font-black uppercase tracking-wider text-primary hover:text-primary/80"
                         onClick={() => {
                           const randomBarcode = Math.floor(100000000000 + Math.random() * 900000000000).toString();
                           form.setValue('barcode', randomBarcode);
@@ -123,122 +136,158 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                       </Button>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Scan or type barcode" {...field} />
+                      <Input placeholder="Scan or type barcode" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              
               <FormField
                 control={form.control}
                 name="sku"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>SKU</FormLabel>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">SKU</FormLabel>
                     <FormControl>
-                      <Input placeholder="Unique ID" {...field} />
+                      <Input placeholder="Unique ID" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="purchase_price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Purchase Price (₹)</FormLabel>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Purchase Price (₹)</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={e => field.onChange(Number(e.target.value))} />
+                      <Input type="number" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} onChange={e => field.onChange(Number(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="selling_price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Selling Price (₹)</FormLabel>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Selling Price (₹)</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={e => field.onChange(Number(e.target.value))} />
+                      <Input type="number" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} onChange={e => field.onChange(Number(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="gst_percentage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>GST %</FormLabel>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">GST %</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={e => field.onChange(Number(e.target.value))} />
+                      <Input type="number" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} onChange={e => field.onChange(Number(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="quantity_in_stock"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Initial Stock</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} onChange={e => field.onChange(Number(e.target.value))} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Category</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Men's Wear" {...field} />
+                      <Input placeholder="e.g. Men's Wear" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-2 gap-2">
-                <FormField
-                  control={form.control}
-                  name="size"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Size</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. XL" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="color"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Color</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. Blue" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
+              <div className="col-span-2 space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">Stock by Size</Label>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm" 
+                    className="rounded-xl h-8 text-[10px] font-black uppercase"
+                    onClick={() => append({ size: '', quantity: 0 })}
+                  >
+                    <Plus className="w-3 h-3 mr-1" /> Add Size
+                  </Button>
+                </div>
+                
+                <div className="space-y-3">
+                  {fields.map((field, index) => (
+                    <div key={field.id} className="flex gap-3 animate-in fade-in slide-in-from-top-2">
+                      <FormField
+                        control={form.control}
+                        name={`variants.${index}.size`}
+                        render={({ field }) => (
+                          <FormItem className="flex-1">
+                            <FormControl>
+                              <Input placeholder="Size (XL, M, 32...)" className="h-11 rounded-xl bg-slate-50 border-slate-100" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`variants.${index}.quantity`}
+                        render={({ field }) => (
+                          <FormItem className="w-32">
+                            <FormControl>
+                              <Input type="number" placeholder="Qty" className="h-11 rounded-xl bg-slate-50 border-slate-100" {...field} onChange={e => field.onChange(Number(e.target.value))} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      {fields.length > 1 && (
+                        <Button 
+                          type="button" 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-11 w-11 rounded-xl text-slate-300 hover:text-red-500 hover:bg-red-50"
+                          onClick={() => remove(index)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              <FormField
+                control={form.control}
+                name="color"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Color</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. Blue" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-              <Button type="submit">Save Product</Button>
+            
+            <DialogFooter className="pt-4">
+              <Button type="button" variant="ghost" onClick={onClose} className="rounded-2xl h-12 px-8 font-black uppercase tracking-widest text-slate-400">Cancel</Button>
+              <Button type="submit" className="rounded-2xl h-12 px-8 font-black uppercase tracking-widest bg-primary shadow-lg shadow-primary/20">Save Product</Button>
             </DialogFooter>
           </form>
         </Form>
@@ -248,3 +297,4 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
 };
 
 export default ProductForm;
+
