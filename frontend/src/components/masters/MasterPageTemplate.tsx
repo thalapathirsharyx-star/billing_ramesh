@@ -48,8 +48,9 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
     setIsLoading(true);
     try {
       const storeId = (user as any)?.company?.id;
-      const data = await service.GetList(storeId);
-      const list = Array.isArray(data) ? data : (data?.data ?? []);
+      const fetchMethod = service.GetList || service.GetAll;
+      const data = await fetchMethod.call(service, storeId);
+      const list = Array.isArray(data) ? data : (data?.data || data?.result || []);
       setItems(list);
       setFilteredItems(list);
     } catch (err) {

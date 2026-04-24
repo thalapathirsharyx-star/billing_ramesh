@@ -145,6 +145,18 @@ function Router() {
         <Route path="/sizes">
           <AppRoute component={Routes.SizesPage} />
         </Route>
+        <Route path="/masters/banks">
+          <AppRoute component={Routes.BankAccountsPage} />
+        </Route>
+        <Route path="/masters/expense-categories">
+          <AppRoute component={Routes.ExpenseCategoriesPage} />
+        </Route>
+        <Route path="/pos/expenses">
+          <AppRoute component={Routes.ExpensesPage} />
+        </Route>
+        <Route path="/pos/ledger">
+          <AppRoute component={Routes.CustomerLedgerPage} />
+        </Route>
         <Route path="/reports/bill-profit">
           <AppRoute component={Routes.BillProfitPage} />
         </Route>

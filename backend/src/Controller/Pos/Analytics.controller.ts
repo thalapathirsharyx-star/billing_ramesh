@@ -16,10 +16,12 @@ export class AnalyticsController extends JWTAuthController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string
   ) {
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
     const data = await this._AnalyticsService.GetBillWiseProfit(
       storeId, 
       new Date(startDate), 
-      new Date(endDate)
+      end
     );
     return this.SendResponseData(data);
   }
@@ -30,10 +32,12 @@ export class AnalyticsController extends JWTAuthController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string
   ) {
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
     const data = await this._AnalyticsService.GetBusinessPNL(
       storeId, 
       new Date(startDate), 
-      new Date(endDate)
+      end
     );
     return this.SendResponseData(data);
   }
@@ -44,10 +48,12 @@ export class AnalyticsController extends JWTAuthController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string
   ) {
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
     const data = await this._AnalyticsService.GetItemWiseProfit(
       storeId, 
       new Date(startDate), 
-      new Date(endDate)
+      end
     );
     return this.SendResponseData(data);
   }
@@ -70,10 +76,12 @@ export class AnalyticsController extends JWTAuthController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string
   ) {
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
     const data = await this._AnalyticsService.GetCategoryReport(
       storeId, 
       new Date(startDate), 
-      new Date(endDate)
+      end
     );
     return this.SendResponseData(data);
   }

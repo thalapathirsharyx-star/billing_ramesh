@@ -1,11 +1,12 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, Unique } from "typeorm";
 import { BaseTable } from "../BaseTable";
 import { company } from "../Admin/company";
 import { AuditLogIdentity } from "@Helper/AuditLog.decorators";
 
 @Entity()
+@Unique(["barcode", "store_id"])
 export class product extends BaseTable {
-  @Column({ unique: true })
+  @Column()
   @Index()
   barcode: string;
 

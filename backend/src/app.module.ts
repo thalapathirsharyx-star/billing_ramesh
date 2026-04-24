@@ -55,7 +55,6 @@ import { ProductCategoryController } from "./Controller/Pos/ProductCategory.cont
 import { ProductSizeController } from "./Controller/Pos/ProductSize.controller";
 import { ProductCategoryService } from "./Service/Pos/ProductCategory.service";
 import { ProductSizeService } from "./Service/Pos/ProductSize.service";
-import { ProductSizeService } from "./Service/Pos/ProductSize.service";
 import { AnalyticsController } from "./Controller/Pos/Analytics.controller";
 import { AnalyticsService } from "./Service/Pos/Analytics.service";
 import { BankController } from "./Controller/Pos/Bank.controller";
@@ -64,6 +63,7 @@ import { ExpenseController } from "./Controller/Pos/Expense.controller";
 import { ExpenseService } from "./Service/Pos/Expense.service";
 import { CustomerLedgerController } from "./Controller/Pos/CustomerLedger.controller";
 import { CustomerLedgerService } from "./Service/Pos/CustomerLedger.service";
+import { ExpenseCategoryController } from "./Controller/Pos/ExpenseCategory.controller";
 
 @Module({
   imports: [
@@ -134,6 +134,7 @@ import { CustomerLedgerService } from "./Service/Pos/CustomerLedger.service";
     BankController,
     ExpenseController,
     CustomerLedgerController,
+    ExpenseCategoryController,
   ],
   providers: [
     AuthService,

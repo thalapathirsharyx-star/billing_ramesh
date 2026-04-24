@@ -13,6 +13,10 @@ import {
   AlertTriangle,
   Hash,
   Box,
+  Building2,
+  Receipt,
+  Wallet,
+  CreditCard,
 } from "lucide-react";
 
 export const allNavigation = [
@@ -21,6 +25,10 @@ export const allNavigation = [
   { name: "Products", href: "/products", icon: Shirt },
   { name: "Categories", href: "/categories", icon: Layers },
   { name: "Sizes", href: "/sizes", icon: Ruler },
+  { name: "Bank Accounts", href: "/masters/banks", icon: Building2 },
+  { name: "Expense Master", href: "/masters/expense-categories", icon: Layers },
+  { name: "Expenses", href: "/pos/expenses", icon: Receipt },
+  { name: "Customer Khata", href: "/pos/ledger", icon: Wallet },
   { name: "Customers", href: "/customers", icon: Users },
   { name: "Inventory", href: "/inventory", icon: Warehouse },
   { name: "Bill Profit", href: "/reports/bill-profit", icon: ScrollText },

@@ -115,13 +115,19 @@ const BusinessPNLPage: React.FC = () => {
                 TAX/DISC
               </div>
               <div 
+                className="h-full bg-red-400 flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
+                style={{ width: `${(data?.total_expenses / data?.total_sales) * 100}%` }}
+              >
+                EXP
+              </div>
+              <div 
                 className={`h-full flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500 ${data?.net_profit >= 0 ? 'bg-emerald-500 rounded-r-xl' : 'bg-red-500'}`}
                 style={{ width: `${(Math.max(0, data?.net_profit) / data?.total_sales) * 100}%` }}
               >
                 PROFIT
               </div>
             </div>
-            <div className="flex gap-6 mt-4">
+            <div className="flex flex-wrap gap-6 mt-4">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-orange-400 rounded-full" />
                 <span className="text-xs font-bold text-slate-600">Product Cost ({( (data?.total_cost / data?.total_sales) * 100).toFixed(1)}%)</span>
@@ -129,6 +135,10 @@ const BusinessPNLPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-purple-400 rounded-full" />
                 <span className="text-xs font-bold text-slate-600">Tax & Discounts ({( ((data?.total_tax + data?.total_discount) / data?.total_sales) * 100).toFixed(1)}%)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-400 rounded-full" />
+                <span className="text-xs font-bold text-slate-600">Expenses ({( (data?.total_expenses / data?.total_sales) * 100).toFixed(1)}%)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-emerald-500 rounded-full" />
@@ -164,9 +174,13 @@ const BusinessPNLPage: React.FC = () => {
                 <span className="font-bold text-slate-600">Tax Collected</span>
                 <span className="font-black text-slate-900">₹{data?.total_tax.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between items-center py-2">
+              <div className="flex justify-between items-center py-2 border-b border-slate-50">
                 <span className="font-bold text-slate-600">Discounts Given</span>
                 <span className="font-black text-slate-900">₹{data?.total_discount.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="font-bold text-slate-600">Operational Expenses</span>
+                <span className="font-black text-red-500">₹{data?.total_expenses?.toLocaleString() || 0}</span>
               </div>
             </div>
           </div>

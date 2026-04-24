@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, Between } from 'typeorm';
 import { invoice } from '@Database/Table/Pos/invoice';
 import { customer } from '@Database/Table/Pos/customer';
 import { product } from '@Database/Table/Pos/product';
@@ -9,51 +9,75 @@ export class DashboardService {
   constructor(private _DataSource: DataSource) { }
 
   async GetStats(storeId: string) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
 
-    const totalRevenue = await invoice.createQueryBuilder('invoice')
-      .select('SUM(invoice.total_amount)', 'sum')
+    // Today's Sales
+    const todaySales = await invoice.createQueryBuilder('invoice')
+      .select('SUM(invoice.total_amount)', 'revenue')
+      .addSelect('SUM(invoice.tax_amount)', 'tax')
+      .addSelect('SUM(invoice.discount_amount)', 'discount')
       .where('invoice.store_id = :storeId', { storeId })
+      .andWhere('invoice.created_on BETWEEN :start AND :end', { start: todayStart, end: todayEnd })
+      .andWhere('invoice.status = true')
       .getRawOne();
 
-    // Profit and Investment calculation
-    const profitStats = await this._DataSource.getRepository('invoice_item')
+    // Today's Cost of Goods Sold (using snapshots)
+    const todayCost = await this._DataSource.getRepository('invoice_item')
       .createQueryBuilder('item')
       .leftJoin('item.invoice', 'invoice')
-      .leftJoin('item.product', 'product')
-      .select('SUM(product.purchase_price * item.quantity)', 'investment')
-      .addSelect('SUM((item.unit_price - product.purchase_price) * item.quantity)', 'profit')
+      .select('SUM(item.purchase_price * item.quantity)', 'cost')
       .where('invoice.store_id = :storeId', { storeId })
+      .andWhere('invoice.created_on BETWEEN :start AND :end', { start: todayStart, end: todayEnd })
+      .andWhere('invoice.status = true')
       .getRawOne();
 
-    const todayRevenue = await invoice.createQueryBuilder('invoice')
-      .select('SUM(invoice.total_amount)', 'sum')
-      .where('invoice.store_id = :storeId', { storeId })
-      .andWhere('invoice.created_on >= :today', { today })
+    // Today's Expenses
+    const todayExpenses = await this._DataSource.getRepository('expense')
+      .createQueryBuilder('expense')
+      .select('SUM(expense.amount)', 'sum')
+      .where('expense.store_id = :storeId', { storeId })
+      .andWhere('expense.expense_date BETWEEN :start AND :end', { start: todayStart, end: todayEnd })
+      .andWhere('expense.status = true')
       .getRawOne();
 
-    const totalInvoices = await invoice.count({ where: { store_id: storeId } });
-    const totalCustomers = await customer.count({ where: { store_id: storeId } });
-    const totalProducts = await product.count({ where: { store_id: storeId } });
+    const totalRevenue = Number(todaySales?.revenue || 0);
+    const totalCost = Number(todayCost?.cost || 0);
+    const totalExp = Number(todayExpenses?.sum || 0);
+    const netProfit = totalRevenue - totalCost - totalExp;
+
+    const totalInvoices = await invoice.count({ where: { store_id: storeId, created_on: Between(todayStart, todayEnd), status: true } });
+    const totalCustomers = await customer.count({ where: { store_id: storeId, status: true } });
+    const totalProducts = await product.count({ where: { store_id: storeId, status: true } });
+
+    // Total Inventory Investment
+    const totalInvestment = await product.createQueryBuilder('p')
+      .select('SUM(p.purchase_price * p.quantity_in_stock)', 'sum')
+      .where('p.store_id = :storeId', { storeId })
+      .andWhere('p.status = true')
+      .getRawOne();
 
     return {
-      totalRevenue: Number(totalRevenue?.sum || 0),
-      todayRevenue: Number(todayRevenue?.sum || 0),
-      totalInvestment: Number(profitStats?.investment || 0),
-      totalProfit: Number(profitStats?.profit || 0),
-      totalInvoices,
+      todayRevenue: totalRevenue,
+      totalProfit: netProfit, // Today's Net Profit
+      totalInvestment: Number(totalInvestment?.sum || 0),
       totalCustomers,
-      totalProducts
+      totalInvoices,
+      totalProducts,
+      totalRevenue: totalRevenue // Alias for legacy UI if needed
     };
   }
 
   async GetSalesTrend(storeId: string) {
+    // Last 7 days trend
     const data = await invoice.createQueryBuilder('invoice')
       .select("DATE_TRUNC('day', invoice.created_on)", 'date')
       .addSelect('SUM(invoice.total_amount)', 'amount')
       .where('invoice.store_id = :storeId', { storeId })
       .andWhere("invoice.created_on >= NOW() - INTERVAL '7 days'")
+      .andWhere('invoice.status = true')
       .groupBy("DATE_TRUNC('day', invoice.created_on)")
       .orderBy("DATE_TRUNC('day', invoice.created_on)", 'ASC')
       .getRawMany();
@@ -69,11 +93,12 @@ export class DashboardService {
       .select('invoice.payment_method', 'method')
       .addSelect('COUNT(invoice.id)', 'count')
       .where('invoice.store_id = :storeId', { storeId })
+      .andWhere('invoice.status = true')
       .groupBy('invoice.payment_method')
       .getRawMany();
 
     return data.map(d => ({
-      name: d.method,
+      name: d.method || 'Cash',
       value: Number(d.count)
     }));
   }

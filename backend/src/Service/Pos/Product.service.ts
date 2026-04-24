@@ -39,6 +39,12 @@ export class ProductService {
   }
 
   async Insert(data: ProductModel, userId: string) {
+    // Check for duplicate barcode in this store
+    const existing = await this.GetByBarcode(data.barcode, data.store_id);
+    if (existing) {
+      throw new Error(`Product with barcode "${data.barcode}" already exists in this store.`);
+    }
+
     const _product = new product();
     Object.assign(_product, data);
     _product.created_by_id = userId;
@@ -51,6 +57,15 @@ export class ProductService {
   async Update(id: string, data: ProductModel, userId: string) {
     const _product = await product.findOne({ where: { id } });
     if (!_product) throw new Error('Product not found');
+
+    // If barcode is changing, check for duplicates
+    if (data.barcode !== _product.barcode) {
+      const existing = await this.GetByBarcode(data.barcode, data.store_id);
+      if (existing) {
+        throw new Error(`Another product with barcode "${data.barcode}" already exists.`);
+      }
+    }
+
     Object.assign(_product, data);
     _product.updated_by_id = userId;
     _product.updated_on = new Date();
