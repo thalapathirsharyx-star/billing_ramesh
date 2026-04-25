@@ -32,11 +32,21 @@ export class UserRoleService {
       return ResultData;
     } else {
       const UserRoleList = await user_role.find({
-        where: { created_by_id: Not("0") },
+        where: { created_by_id: Not("0"), store_id: null },
       });
       await this._CacheService.Store(`${CacheEnum.UserRole}`, UserRoleList);
       return UserRoleList;
     }
+  }
+
+  async GetByStoreId(StoreId: string) {
+    // Fetch global roles + tenant specific roles
+    return await user_role.find({
+      where: [
+        { store_id: StoreId },
+        { store_id: null, is_team_role: true } // Assuming system roles that are intended for teams
+      ]
+    });
   }
 
   async GetById(UserRoleId: string) {
@@ -56,10 +66,13 @@ export class UserRoleService {
     }
   }
 
-  async Insert(UserRoleData: UserRoleModel, UserId: string) {
+  async Insert(UserRoleData: UserRoleModel, UserId: string, StoreId?: string) {
     const _UserRoleData = new user_role();
     _UserRoleData.name = UserRoleData.name;
-    _UserRoleData.code = UserRoleData.code;
+    _UserRoleData.code = UserRoleData.code || UserRoleData.name.toUpperCase().replace(/\s+/g, '_');
+    _UserRoleData.permission = UserRoleData.permission;
+    _UserRoleData.store_id = StoreId;
+    _UserRoleData.is_team_role = !!StoreId; // Custom roles are team roles
     _UserRoleData.created_by_id = UserId;
     _UserRoleData.created_on = new Date();
     await user_role.insert(_UserRoleData);
@@ -68,7 +81,10 @@ export class UserRoleService {
       ActionType: LogActionEnum.Insert,
       PrimaryId: [_UserRoleData.id],
     });
-    await this._CacheService.Store(`${CacheEnum.UserRole}`, [_UserRoleData]);
+    // For tenant roles, we don't global-cache the same way
+    if (!StoreId) {
+        await this._CacheService.Store(`${CacheEnum.UserRole}`, [_UserRoleData]);
+    }
     return _UserRoleData;
   }
 
@@ -78,7 +94,8 @@ export class UserRoleService {
       throw new Error("Record not found");
     }
     UserRoleUpdateData.name = UserRoleData.name;
-    UserRoleUpdateData.code = UserRoleData.code;
+    UserRoleUpdateData.code = UserRoleData.code || UserRoleUpdateData.code;
+    UserRoleUpdateData.permission = UserRoleData.permission;
     UserRoleUpdateData.updated_by_id = UserId;
     UserRoleUpdateData.updated_on = new Date();
     await user_role.update(Id, UserRoleUpdateData);
@@ -87,9 +104,11 @@ export class UserRoleService {
       ActionType: LogActionEnum.Update,
       PrimaryId: [UserRoleUpdateData.id],
     });
-    await this._CacheService.Store(`${CacheEnum.UserRole}`, [
-      { ...UserRoleUpdateData, id: Id },
-    ]);
+    if (!UserRoleUpdateData.store_id) {
+        await this._CacheService.Store(`${CacheEnum.UserRole}`, [
+          { ...UserRoleUpdateData, id: Id },
+        ]);
+    }
     return UserRoleUpdateData;
   }
 

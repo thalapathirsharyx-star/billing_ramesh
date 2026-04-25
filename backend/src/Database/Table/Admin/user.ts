@@ -8,6 +8,7 @@ import {
 import { Entity, Column, JoinColumn, ManyToOne, Index } from "typeorm";
 import { BaseTable } from "../BaseTable";
 import { user_role } from "./user_role";
+import { company } from "./company";
 
 @Entity()
 export class user extends BaseTable {
@@ -41,4 +42,12 @@ export class user extends BaseTable {
 
   @Column({ type: "bigint", nullable: true })
   reset_otp: number;
+
+  @ManyToOne(() => company, { onDelete: "RESTRICT" })
+  @JoinColumn({ name: "store_id" })
+  store: company;
+
+  @Column({ type: "uuid", nullable: true })
+  @Index()
+  store_id: string;
 }

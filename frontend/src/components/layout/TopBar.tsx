@@ -207,7 +207,8 @@ export function TopBar({ isAdmin = false }: { isAdmin?: boolean }) {
                   <>
                     {getNavSections(allNavigation, allBottomNav).map((section) => {
                       const filteredItems = section.items.filter(item => {
-                        if (item.roles && !item.roles.includes(user?.role || "")) return false;
+                        const normalizedUserRole = user?.role?.toLowerCase()?.replace(/\s+/g, '_') || "";
+                        if (item.roles && !item.roles.includes(normalizedUserRole || "")) return false;
                         return true;
                       });
 

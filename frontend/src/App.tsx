@@ -124,6 +124,14 @@ function Router() {
           <AppRoute component={Routes.Settings} />
         </Route>
         
+        {/* Team Management */}
+        <Route path="/settings/roles">
+          <AppRoute component={Routes.TenantRolesPage} />
+        </Route>
+        <Route path="/settings/employees">
+          <AppRoute component={Routes.EmployeeManagementPage} />
+        </Route>
+
         {/* Help & Support */}
         <Route path="/help">
           <AppRoute component={() => <div className="p-8">Help Center Coming Soon</div>} />

@@ -68,9 +68,10 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
   },
   {
     label: "Settings & Management",
-    items: bottomNav.filter(item => [
-      "Settings", "Workspace", "Organization", "Team & Roles", "User Roles", "White Label", "Security", "Billing", "Audit Logs"
-    ].includes(item.name ?? ""))
+    items: [
+      ...nav.filter(item => ["Roles & Permissions", "Employee Management"].includes(item.name ?? "")),
+      ...bottomNav.filter(item => ["Settings", "Workspace", "Organization", "Team & Roles", "User Roles", "White Label", "Security", "Billing", "Audit Logs"].includes(item.name ?? ""))
+    ]
   },
 ];
 

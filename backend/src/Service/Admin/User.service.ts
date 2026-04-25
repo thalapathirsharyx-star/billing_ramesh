@@ -17,7 +17,14 @@ export class UserService {
   }
 
   async GetAllExpectSuperAdmin() {
-    return await user.find({ relations: ['user_role'] });
+    return await user.find({ relations: ['user_role'], where: { store_id: null } });
+  }
+
+  async GetEmployeesByStoreId(StoreId: string) {
+    return await user.find({ 
+      where: { store_id: StoreId },
+      relations: ['user_role']
+    });
   }
 
   async GetAdminStats() {
@@ -56,6 +63,7 @@ export class UserService {
     _UserData.email = UserData.email;
     _UserData.password = UserData.password;
     _UserData.mobile = UserData.mobile;
+    _UserData.store_id = (UserData as any).store_id || null;
     _UserData.created_by_id = UserId;
     _UserData.created_on = new Date();
     _UserData.password = this._EncryptionService.Encrypt(UserData.password);

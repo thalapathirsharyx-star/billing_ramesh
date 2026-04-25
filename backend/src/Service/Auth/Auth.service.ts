@@ -20,24 +20,34 @@ export class AuthService {
         { email: usernameOrEmail },
         { username: usernameOrEmail }
       ], 
-      relations: ['user_role'] 
+      relations: ['user_role', 'store'] 
     });
-    const CompanyData = await company.find({ relations: ["currency"] });
+
     if (!UserData) {
       throw new Error('Invalid email id');
     }
+
     if (UserData.status == false) {
-      throw new Error('User suspended, contanct administration');
+      throw new Error('User suspended, contact administration');
     }
+
     if (this._EncryptionService.Decrypt(UserData.password) != password) {
       throw new Error('Invalid password');
     }
+
+    // Fetch company from store relation or fallback to system default if store is missing (for super admins)
+    let companyData = UserData.store;
+    if (!companyData) {
+        const allCompanies = await company.find({ relations: ["currency"] });
+        companyData = allCompanies[0];
+    }
+
     const payload = {
       email: UserData.email,
       user_id: UserData.id,
       user_role_id: UserData.user_role_id,
       user_role_name: UserData.user_role.name,
-      company: CompanyData[0]
+      company: companyData
     };
     const api_token = this._JwtService.sign(payload);
     return { api_token, user: payload };
@@ -113,6 +123,7 @@ export class AuthService {
     UserData.password = this._EncryptionService.Encrypt(data.password);
     UserData.mobile = data.mobile;
     UserData.user_role_id = role.id;
+    UserData.store_id = CompanyData.id; // Link to company
     UserData.created_by_id = "0";
     UserData.created_on = new Date();
     

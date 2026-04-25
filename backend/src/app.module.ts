@@ -64,6 +64,8 @@ import { ExpenseService } from "./Service/Pos/Expense.service";
 import { CustomerLedgerController } from "./Controller/Pos/CustomerLedger.controller";
 import { CustomerLedgerService } from "./Service/Pos/CustomerLedger.service";
 import { ExpenseCategoryController } from "./Controller/Pos/ExpenseCategory.controller";
+import { TenantUserRoleController } from "./Controller/Pos/TenantUserRole.controller";
+import { EmployeeController } from "./Controller/Pos/Employee.controller";
 
 @Module({
   imports: [
@@ -135,6 +137,8 @@ import { ExpenseCategoryController } from "./Controller/Pos/ExpenseCategory.cont
     ExpenseController,
     CustomerLedgerController,
     ExpenseCategoryController,
+    TenantUserRoleController,
+    EmployeeController,
   ],
   providers: [
     AuthService,
