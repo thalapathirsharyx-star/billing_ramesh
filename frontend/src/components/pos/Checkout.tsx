@@ -15,6 +15,8 @@ import { InvoiceService } from '@/service/invoice.service';
 import { CustomerService } from '@/service/customer.service';
 import { BankService } from '@/service/bank.service';
 import { useAuth } from '@/lib/auth';
+import { format } from "date-fns";
+import TotalWeightDisplay from "./TotalWeightDisplay";
 import { toast } from 'sonner';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -423,8 +425,14 @@ const Checkout: React.FC = () => {
         </div>
         
         <div className="pt-4 border-t border-slate-800 flex justify-between items-end">
-          <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Payable Amount</div>
-          <div className="text-4xl font-black text-white leading-none">₹{finalTotal.toLocaleString()}</div>
+          <TotalWeightDisplay 
+            qty={items.reduce((acc, item) => acc + item.quantity, 0)} 
+            gsm={items[0]?.gsm || 0} 
+          />
+          <div className="text-right space-y-1">
+            <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Grand Total</p>
+            <p className="text-5xl font-black text-white leading-none">₹{finalTotal.toLocaleString()}</p>
+          </div>
         </div>
 
         <Button 

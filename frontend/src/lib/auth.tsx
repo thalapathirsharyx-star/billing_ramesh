@@ -61,7 +61,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return null;
         }
 
-        return data;
+        const userData = data.result || data;
+        // Normalize role property
+        if (userData && !userData.role && userData.user_role_name) {
+          userData.role = userData.user_role_name;
+        }
+        return userData;
       } catch (err: any) {
         // ✅ Ignore Unauthorized (expected before login)
         if (err?.status === 401 || err?.message?.includes("Unauthorized")) {
@@ -81,6 +86,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // The backend now returns { api_token, user: { ..., company: { ... } } }
     // Or it might be the raw result object from 'me'
     const userData = data.user || data.result || data;
+    
+    // Normalize role property if missing but user_role_name exists
+    if (!userData.role && userData.user_role_name) {
+      userData.role = userData.user_role_name;
+    }
     
     // Set user_data cookie (accessible by JS for context)
     document.cookie = `user_data=${encodeURIComponent(JSON.stringify(userData))}; path=/; max-age=86400; SameSite=Lax`;

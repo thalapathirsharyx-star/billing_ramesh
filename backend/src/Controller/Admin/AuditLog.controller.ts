@@ -12,7 +12,7 @@ export class AuditLogController extends JWTAuthController {
     super()
   }
 
-  @Get('LazyLoadList')
+  @Post('LazyLoadList')
   async LazyLoadList(@Body() AuditLogLazyLoadData: AuditLogLazyLoadModel) {
     const AuditLogListData = await this._AuditLogService.LazyLoadList(AuditLogLazyLoadData);
     return this.SendResponseData({ data: AuditLogListData.data, total: AuditLogListData.total_record });

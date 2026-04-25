@@ -44,6 +44,10 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
     items: nav.filter(item => ["Dashboard", "Analytics", "Provider Analytics"].includes(item.name ?? ""))
   },
   {
+    label: "Platform Administration",
+    items: nav.filter(item => ["Global Customers"].includes(item.name ?? ""))
+  },
+  {
     label: "POS & Billing",
     items: nav.filter(item => [
       "POS Terminal", "Products", "Categories", "Sizes", "Customers", "Inventory", "Invoice Center"

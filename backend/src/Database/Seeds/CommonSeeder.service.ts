@@ -78,15 +78,21 @@ export class CommonSeederService {
 
 
   UserRoleSeed = async () => {
-    const exists = await user_role.findOne({ where: { name: 'super_admin' } });
-    if (!exists) {
-      await this._DataSource.manager.createQueryBuilder()
-        .insert()
-        .into(user_role)
-        .values([
-          { name: 'super_admin', code: 'SUPER_ADMIN', created_by_id: "0", created_on: new Date() }
-        ])
-        .execute();
+    const roles = [
+      { name: 'super_admin', code: 'SUPER_ADMIN', created_by_id: "0", created_on: new Date() },
+      { name: 'tenant', code: 'TENANT', created_by_id: "0", created_on: new Date() },
+      { name: 'user', code: 'USER', created_by_id: "0", created_on: new Date() }
+    ];
+
+    for (const roleData of roles) {
+      const exists = await user_role.findOne({ where: { name: roleData.name } });
+      if (!exists) {
+        await this._DataSource.manager.createQueryBuilder()
+          .insert()
+          .into(user_role)
+          .values([roleData])
+          .execute();
+      }
     }
   }
 

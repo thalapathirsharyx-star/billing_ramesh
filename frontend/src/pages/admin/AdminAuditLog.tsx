@@ -53,7 +53,7 @@ export default function AdminAuditLog() {
 
     const fetchUsers = async () => {
         try {
-            const res = await CommonService.GetAll("/admin/users");
+            const res = await CommonService.GetAll("/User/List");
             setUsers(Array.isArray(res) ? res : []);
         } catch (err) {
             console.error("Failed to fetch users:", err);

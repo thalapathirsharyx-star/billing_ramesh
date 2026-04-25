@@ -22,6 +22,12 @@ export class UserController extends JWTAuthController {
     return this.SendResponseData(UserListData);
   }
 
+  @Get('AdminStats')
+  async AdminStats() {
+    const stats = await this._UserService.GetAdminStats();
+    return this.SendResponseData(stats);
+  }
+
   @Get('ById/:Id')
   async ById(@Param('Id') Id: string) {
     const UserData = await this._UserService.GetById(Id);

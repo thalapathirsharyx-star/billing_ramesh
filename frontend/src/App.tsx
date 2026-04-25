@@ -72,6 +72,14 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
+function DashboardWrapper() {
+  const { user, isLoading } = useAuth();
+  if (isLoading) return <SuspenseLoader />;
+  const normalizedRole = user?.role?.toLowerCase()?.replace(/\s+/g, '_') || "";
+  if (normalizedRole === "super_admin") return <Redirect to="/admin" />;
+  return <AppRoute component={Routes.BusinessDashboard} />;
+}
+
 function Router() {
   return (
     <Suspense fallback={<SuspenseLoader />}>
@@ -86,9 +94,7 @@ function Router() {
         <Route path="/resetpassword/:uid" component={Routes.ResetPassword} />
 
         {/* Dashboard / App Home */}
-        <Route path="/dashboard">
-          <AppRoute component={Routes.BusinessDashboard} />
-        </Route>
+        <Route path="/dashboard" component={DashboardWrapper} />
 
         {/* Admin Routes */}
         <Route path="/admin">
@@ -99,6 +105,9 @@ function Router() {
         </Route>
         <Route path="/admin/user/:uid">
           <AdminRoute component={Routes.AdminUserForm} />
+        </Route>
+        <Route path="/admin/customers">
+          <SuperAdminRoute component={Routes.AdminCustomersPage} />
         </Route>
         <Route path="/admin/auditlogs">
           <SuperAdminRoute component={Routes.AdminAuditLog} />

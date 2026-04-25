@@ -40,6 +40,7 @@ export const allNavigation = [
   { name: "Batch Tracking", href: "/reports/batch", icon: Box },
   { name: "Serial Tracking", href: "/reports/serial", icon: Hash },
   { name: "Invoice Center", href: "/invoices", icon: ScrollText },
+  { name: "Global Customers", href: "/admin/customers", icon: Users, roles: ["super_admin"] },
 ];
 
 export const allBottomNav = [

@@ -14,6 +14,7 @@ export const AdminUserForm = lazy(() => import("@/pages/admin/AdminUserForm"));
 export const AdminSettings = lazy(() => import("@/pages/admin/AdminSettings"));
 export const AdminAuditLog = lazy(() => import("@/pages/admin/AdminAuditLog"));
 export const AdminErrorLog = lazy(() => import("@/pages/admin/AdminErrorLog"));
+export const AdminCustomersPage = lazy(() => import("@/pages/admin/AdminCustomersPage"));
 
 export const POSPage = lazy(() => import("@/pages/pos/POSPage"));
 export const ProductsPage = lazy(() => import("@/pages/products/ProductsPage"));

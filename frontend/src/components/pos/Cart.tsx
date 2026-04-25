@@ -2,6 +2,7 @@ import React from 'react';
 import { useCart } from '@/context/CartContext';
 import { Trash2, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import TotalWeightDisplay from './TotalWeightDisplay';
 import { 
   Table, 
   TableBody, 
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/table";
 
 const Cart: React.FC = () => {
-  const { items, removeItem, updateQuantity } = useCart();
+  const { items, removeItem, updateQuantity, updateDiscount } = useCart();
 
   if (items.length === 0) {
     return (
@@ -116,6 +117,18 @@ const Cart: React.FC = () => {
           })}
         </TableBody>
       </Table>
+      <div className="p-6 bg-slate-900/50 border-t border-slate-800 flex justify-between items-center">
+        <div className="flex gap-6">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Total Items</p>
+            <p className="text-xl font-black text-white">{items.reduce((acc, item) => acc + item.quantity, 0)}</p>
+          </div>
+          <TotalWeightDisplay 
+            qty={items.reduce((acc, item) => acc + item.quantity, 0)} 
+            gsm={items[0]?.gsm || 0}
+          />
+        </div>
+      </div>
     </div>
   );
 };

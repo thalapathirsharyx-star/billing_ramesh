@@ -17,7 +17,31 @@ export class UserService {
   }
 
   async GetAllExpectSuperAdmin() {
-    return await user.find({ where: { id: Not('0') }, relations: ['user_role'] });
+    return await user.find({ relations: ['user_role'] });
+  }
+
+  async GetAdminStats() {
+    const totalUsers = await user.count();
+    const recentUsers = await user
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.user_role", "role")
+      .addSelect("user.created_on")
+      .orderBy("user.created_on", "DESC")
+      .take(5)
+      .getMany();
+
+    return {
+      totalUsers,
+      recentUsers: recentUsers.map(u => ({
+        id: u.id,
+        username: u.username,
+        email: u.email,
+        firstName: u.first_name,
+        lastName: u.last_name,
+        role: (u as any).user_role?.name || 'user',
+        createdAt: u.created_on
+      }))
+    };
   }
 
   async GetById(UserId: string) {

@@ -29,16 +29,14 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     setLoading(true);
-    /*
     try {
-      const data = await CommonService.GetAll("/admin/stats");
+      const data = await CommonService.GetAll("/User/AdminStats");
       setStats(data);
     } catch (err) {
       console.error("Fetch stats failed:", err);
     } finally {
       setLoading(false);
     }
-    */
     setLoading(false);
   };
 

@@ -40,7 +40,7 @@ export default function AdminUsers() {
     setLoading(true);
     try {
       const [usersData, rolesData] = await Promise.all([
-        CommonService.GetAll("/admin/users"),
+        CommonService.GetAll("/User/List"),
         CommonService.GetAll("/UserRole/List")
       ]);
 

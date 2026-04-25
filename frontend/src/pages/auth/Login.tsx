@@ -28,7 +28,8 @@ export default function Login() {
   // Automatically redirect if user is already logged in
   useEffect(() => {
     if (user && !loading) {
-      if (user.role === "super_admin") {
+      const normalizedRole = user.role?.toLowerCase()?.replace(/\s+/g, '_') || "";
+      if (normalizedRole === "super_admin") {
         setLocation("/admin");
       } else {
         setLocation("/dashboard");
@@ -56,7 +57,8 @@ export default function Login() {
     setLoading(true);
     try {
       const loggedInUser = await login(usernameOrEmail, password);
-      if (loggedInUser && loggedInUser.role === "super_admin") {
+      const normalizedRole = loggedInUser.role?.toLowerCase()?.replace(/\s+/g, '_') || "";
+      if (loggedInUser && normalizedRole === "super_admin") {
         setLocation("/admin");
       } else {
         setLocation("/dashboard");
