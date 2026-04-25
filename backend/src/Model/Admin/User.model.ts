@@ -98,10 +98,10 @@ export class RegisterModel {
   @Type(() => String)
   lastName: string;
 
-  @IsNotEmpty({ message: 'Username required' })
+  @IsNotEmpty({ message: 'Company name required' })
   @ApiProperty({ required: true })
   @Type(() => String)
-  username: string;
+  company: string;
 
   @IsEmail({}, { message: 'Invaild Email format' })
   @IsNotEmpty({ message: 'Email required' })

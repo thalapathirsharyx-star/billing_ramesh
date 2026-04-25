@@ -10,15 +10,15 @@ import { Between } from 'typeorm';
 @Injectable()
 export class AnalyticsService {
   async GetBillWiseProfit(storeId: string, startDate: Date, endDate: Date) {
-    const invoices = await invoice.find({
-      where: {
-        store_id: storeId,
-        created_on: Between(startDate, endDate),
-        status: true
-      },
-      relations: ['items', 'customer'],
-      order: { created_on: 'DESC' }
-    });
+    const invoices = await invoice.createQueryBuilder('inv')
+      .leftJoinAndSelect('inv.items', 'items')
+      .leftJoinAndSelect('inv.customer', 'customer')
+      .addSelect('inv.created_on') // Force select hidden column
+      .where('inv.store_id = :storeId', { storeId })
+      .andWhere('inv.created_on BETWEEN :start AND :end', { start: startDate, end: endDate })
+      .andWhere('inv.status = true')
+      .orderBy('inv.created_on', 'DESC')
+      .getMany();
 
     return invoices.map(inv => {
       let totalCost = 0;

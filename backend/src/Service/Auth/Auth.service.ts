@@ -5,6 +5,8 @@ import { user } from '@Database/Table/Admin/user';
 import { user_role } from '@Database/Table/Admin/user_role';
 import { currency } from '@Database/Table/Admin/currency';
 import { country } from '@Database/Table/Admin/country';
+import { product_category } from '@Database/Table/Pos/product_category';
+import { product_size } from '@Database/Table/Pos/product_size';
 import { EncryptionService } from '../Encryption.service';
 import { RegisterModel } from '@Model/Admin/User.model';
 
@@ -49,7 +51,7 @@ export class AuthService {
 
     // 1. Create a default company for the new user
     const CompanyData = new company();
-    CompanyData.name = `${data.firstName}'s Store`;
+    CompanyData.name = data.company;
     CompanyData.email = data.email;
     CompanyData.address = "Store Address";
     CompanyData.postal_code = "000000";
@@ -60,13 +62,35 @@ export class AuthService {
     const CountryData = await country.findOne({ where: {} });
     
     if (!CurrencyData || !CountryData) {
-      throw new Error('System initialization incomplete: Currency or Country not found');
+      throw new Error('System initialization incomplete: Default Currency or Country not found in database. Please ensure seeding is enabled and successful.');
     }
     
     CompanyData.currency_id = CurrencyData.id;
     CompanyData.country_id = CountryData.id;
     
     await company.save(CompanyData);
+
+    // 1.1 Seed default categories for the new company
+    const categories = ['Mens', 'Womens', 'Kids', 'Inners'];
+    for (const catName of categories) {
+      const cat = new product_category();
+      cat.name = catName;
+      cat.store_id = CompanyData.id;
+      cat.created_by_id = "0";
+      cat.created_on = new Date();
+      await product_category.save(cat);
+    }
+
+    // 1.2 Seed default sizes for the new company
+    const sizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+    for (const sizeName of sizes) {
+      const size = new product_size();
+      size.name = sizeName;
+      size.store_id = CompanyData.id;
+      size.created_by_id = "0";
+      size.created_on = new Date();
+      await product_size.save(size);
+    }
 
     // 2. Find super admin role
     const role = await user_role.findOne({ where: { name: 'super_admin' } });
@@ -76,7 +100,7 @@ export class AuthService {
     UserData.first_name = data.firstName;
     UserData.last_name = data.lastName;
     UserData.email = data.email;
-    UserData.username = data.username;
+    UserData.username = data.email;
     UserData.password = this._EncryptionService.Encrypt(data.password);
     UserData.mobile = data.mobile;
     UserData.user_role_id = role.id;

@@ -40,9 +40,9 @@ const productSchema = z.object({
   selling_price: z.number().min(0),
   gst_percentage: z.number().min(0).max(100),
   category: z.string().min(1, "Category is required"),
-  color: z.string().optional(),
   variants: z.array(z.object({
     size: z.string().min(1, "Size is required"),
+    color: z.string().optional(),
     quantity: z.number().int().min(0)
   })).min(1, "At least one size is required"),
 });
@@ -69,8 +69,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
       selling_price: 0,
       gst_percentage: 12,
       category: '',
-      color: '',
-      variants: [{ size: '', quantity: 0 }],
+      variants: [{ size: '', color: '', quantity: 0 }],
     },
   });
 
@@ -106,7 +105,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
     if (product) {
       form.reset({
         ...product,
-        variants: [{ size: product.size || '', quantity: product.quantity_in_stock || 0 }]
+        variants: [{ 
+          size: product.size || '', 
+          color: product.color || '', 
+          quantity: product.quantity_in_stock || 0 
+        }]
       });
     } else {
       form.reset({
@@ -117,8 +120,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
         selling_price: 0,
         gst_percentage: 12,
         category: '',
-        color: '',
-        variants: [{ size: '', quantity: 0 }],
+        variants: [{ size: '', color: '', quantity: 0 }],
       });
     }
   }, [product, form, isOpen]);
@@ -267,7 +269,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                     variant="outline" 
                     size="sm" 
                     className="rounded-xl h-8 text-[10px] font-black uppercase"
-                    onClick={() => append({ size: '', quantity: 0 })}
+                    onClick={() => append({ size: '', color: '', quantity: 0 })}
                   >
                     <Plus className="w-3 h-3 mr-1" /> Add Size
                   </Button>
@@ -293,6 +295,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                                 ))}
                               </SelectContent>
                             </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`variants.${index}.color`}
+                        render={({ field }) => (
+                          <FormItem className="flex-1">
+                            <FormControl>
+                              <Input placeholder="Color" className="h-11 rounded-xl bg-slate-50 border-slate-100" {...field} />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -325,19 +339,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                 </div>
               </div>
 
-              <FormField
-                control={form.control}
-                name="color"
-                render={({ field }) => (
-                  <FormItem className="col-span-2">
-                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Color</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. Blue" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
             
             <DialogFooter className="pt-4">

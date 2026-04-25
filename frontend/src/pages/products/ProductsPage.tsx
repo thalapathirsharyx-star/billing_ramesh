@@ -93,6 +93,7 @@ const ProductsPage: React.FC = () => {
         const payload = { 
           ...productBase, 
           size: variants[0].size,
+          color: variants[0].color,
           quantity_in_stock: variants[0].quantity,
           store_id: storeId 
         };
@@ -104,9 +105,10 @@ const ProductsPage: React.FC = () => {
           const payload = {
             ...productBase,
             size: v.size,
+            color: v.color,
             quantity_in_stock: v.quantity,
-            barcode: variants.length > 1 ? `${productBase.barcode}-${v.size}` : productBase.barcode,
-            sku: variants.length > 1 ? `${productBase.sku}-${v.size}` : productBase.sku,
+            barcode: variants.length > 1 ? `${productBase.barcode}-${v.size}${v.color ? '-' + v.color : ''}` : productBase.barcode,
+            sku: variants.length > 1 ? `${productBase.sku}-${v.size}${v.color ? '-' + v.color : ''}` : productBase.sku,
             store_id: storeId
           };
           return ProductService.Insert(payload);

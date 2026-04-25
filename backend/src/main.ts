@@ -43,10 +43,10 @@ async function bootstrap() {
     swaggerOptions: { tagsSorter: "alpha", enableSearch: true },
   });
   const _ConfigService = app.get(ConfigService);
-  await app.listen(_ConfigService.get<number>("Port") || 8000);
   if (_ConfigService.get("Database.Seed") == "true") {
     const _CommonSeederService = app.get(CommonSeederService);
     await _CommonSeederService.Run();
   }
+  await app.listen(_ConfigService.get<number>("Port") || 8000);
 }
 bootstrap();

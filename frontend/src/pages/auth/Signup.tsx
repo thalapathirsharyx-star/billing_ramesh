@@ -27,7 +27,7 @@ export default function Signup() {
   const { toast } = useToast();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
+  const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -123,7 +123,7 @@ export default function Signup() {
     const newErrors: Record<string, string> = {};
     if (!firstName.trim()) newErrors.firstName = "First name is required";
     if (!lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!username.trim()) newErrors.username = "Username is required";
+    if (!company.trim()) newErrors.company = "Company name is required";
     if (!email.trim()) {
       newErrors.email = "Email is required";
     } else if (/[A-Z]/.test(email)) {
@@ -145,7 +145,7 @@ export default function Signup() {
     setLoading(true);
     try {
       const userData: any = await register({ 
-        username, 
+        company,
         password, 
         firstName, 
         lastName, 
@@ -240,13 +240,13 @@ export default function Signup() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="username">Username</Label>
+                    <Label htmlFor="company">Company Name</Label>
                     <Input
-                      id="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                      placeholder="johndoe"
-                      className={errors.username ? "border-destructive" : ""}
+                      id="company"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      placeholder="My Awesome Store"
+                      className={errors.company ? "border-destructive" : ""}
                     />
                   </div>
 
