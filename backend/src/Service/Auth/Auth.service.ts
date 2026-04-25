@@ -92,8 +92,17 @@ export class AuthService {
       await product_size.save(size);
     }
 
-    // 2. Find super admin role
-    const role = await user_role.findOne({ where: { name: 'super_admin' } });
+    // 2. Assign Role (Default to 'tenant' for new signups)
+    let role = await user_role.findOne({ where: { name: 'tenant' } });
+    
+    // Fallback to super_admin if tenant role is not found (for legacy/system initialization)
+    if (!role) {
+        role = await user_role.findOne({ where: { name: 'super_admin' } });
+    }
+
+    if (!role) {
+        throw new Error('System roles not initialized. Please ensure database seeding is complete.');
+    }
 
     // 3. Create User
     const UserData = new user();
@@ -107,8 +116,6 @@ export class AuthService {
     UserData.created_by_id = "0";
     UserData.created_on = new Date();
     
-    await user.save(UserData);
-
     await user.save(UserData);
     
     return this.ValidateUser(data.email, data.password);
