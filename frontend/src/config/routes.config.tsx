@@ -40,5 +40,5 @@ export const BatchReportPage = lazy(() => import("@/pages/reports/BatchReportPag
 export const SerialReportPage = lazy(() => import("@/pages/reports/SerialReportPage"));
 
 export const Settings = lazy(() => import("@/pages/Settings"));
-export const TenantRolesPage = lazy(() => import("@/pages/settings/TenantRolesPage"));
+export const UserRolesPage = lazy(() => import("@/pages/inventory/UserRolesPage"));
 export const EmployeeManagementPage = lazy(() => import("@/pages/settings/EmployeeManagementPage"));

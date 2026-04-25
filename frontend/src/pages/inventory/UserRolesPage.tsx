@@ -101,6 +101,7 @@ const TenantRolesPage: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<any>(null);
   const [newRole, setNewRole] = useState({
     name: "",
+    code: "",
     permissions: {} as Record<string, boolean>
   });
 
@@ -108,7 +109,7 @@ const TenantRolesPage: React.FC = () => {
     try {
       setLoading(true);
       const res = await CommonService.GetAll("/tenant-role/List");
-      setRoles(res.result || []);
+      setRoles(Array.isArray(res) ? res : (res.result || []));
     } catch (error) {
       toast.error("Failed to fetch roles");
     } finally {
@@ -130,6 +131,7 @@ const TenantRolesPage: React.FC = () => {
       const data = {
         id: selectedRole?.id,
         name: newRole.name,
+        code: newRole.code,
         permission: newRole.permissions
       };
       await CommonService.CommonPost(data, "/tenant-role/Save");
@@ -155,7 +157,7 @@ const TenantRolesPage: React.FC = () => {
 
   const resetForm = () => {
     setSelectedRole(null);
-    setNewRole({ name: "", permissions: {} });
+    setNewRole({ name: "", code: "", permissions: {} });
   };
 
   const togglePermission = (permId: string) => {
@@ -172,6 +174,7 @@ const TenantRolesPage: React.FC = () => {
     setSelectedRole(role);
     setNewRole({
       name: role.name,
+      code: role.code,
       permissions: role.permission || {}
     });
     setIsDialogOpen(true);
@@ -207,16 +210,29 @@ const TenantRolesPage: React.FC = () => {
             </DialogHeader>
 
             <div className="space-y-6 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="roleName" className="font-bold">Role Name</Label>
-                <Input 
-                  id="roleName" 
-                  placeholder="e.g. Senior Cashier" 
-                  value={newRole.name}
-                  onChange={(e) => setNewRole({...newRole, name: e.target.value})}
-                  className="rounded-xl h-12"
-                  disabled={selectedRole?.store_id === null} // System roles cannot be renamed
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="roleName" className="font-bold">Role Name</Label>
+                  <Input 
+                    id="roleName" 
+                    placeholder="e.g. Senior Cashier" 
+                    value={newRole.name}
+                    onChange={(e) => setNewRole({...newRole, name: e.target.value})}
+                    className="rounded-xl h-12"
+                    disabled={selectedRole?.store_id === null}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="roleCode" className="font-bold">Role Code (Optional)</Label>
+                  <Input 
+                    id="roleCode" 
+                    placeholder="e.g. SR_CASHIER" 
+                    value={newRole.code || ""}
+                    onChange={(e) => setNewRole({...newRole, code: e.target.value})}
+                    className="rounded-xl h-12"
+                    disabled={selectedRole?.store_id === null}
+                  />
+                </div>
               </div>
 
               <div className="space-y-4">
@@ -265,14 +281,18 @@ const TenantRolesPage: React.FC = () => {
         {loading ? (
           [1, 2, 3].map(i => <div key={i} className="h-64 rounded-[32px] bg-muted animate-pulse" />)
         ) : (
-          roles.map((role) => (
+          roles
+            .filter(role => role.code !== 'TENANT' && role.code !== 'USER')
+            .map((role) => (
             <Card key={role.id} className="rounded-[32px] border-border shadow-sm hover:shadow-xl transition-all duration-300 group overflow-hidden border-t-4 border-t-primary">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                   <div>
                     <CardTitle className="text-xl font-black">{role.name}</CardTitle>
-                    <CardDescription className="text-[10px] font-bold uppercase tracking-widest mt-1">
-                      {role.store_id ? "Custom Role" : "System Role"}
+                    <CardDescription className="text-[10px] font-bold uppercase tracking-widest mt-1 flex items-center gap-2">
+                      <Badge variant="outline" className="px-1 py-0 h-4 border-muted text-[8px]">{role.code}</Badge>
+                      <span>•</span>
+                      <span>{role.store_id ? "Custom Role" : "System Role"}</span>
                     </CardDescription>
                   </div>
                   {role.store_id ? (
@@ -314,11 +334,7 @@ const TenantRolesPage: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="pt-4 border-t border-muted flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                      <Users className="w-3 h-3" />
-                      <span>Used by 3 Employees</span>
-                    </div>
+                  <div className="pt-4 border-t border-muted flex items-center justify-end">
                     <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>

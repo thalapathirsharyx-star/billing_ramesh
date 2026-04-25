@@ -42,7 +42,7 @@ export const allNavigation = [
   { name: "Batch Tracking", href: "/reports/batch", icon: Box },
   { name: "Serial Tracking", href: "/reports/serial", icon: Hash },
   { name: "Invoice Center", href: "/invoices", icon: ScrollText },
-  { name: "Roles & Permissions", href: "/settings/roles", icon: ShieldCheck, roles: ["tenant", "super_admin"] },
+  { name: "User Roles", href: "/masters/roles", icon: ShieldCheck, roles: ["tenant", "super_admin"] },
   { name: "Employee Management", href: "/settings/employees", icon: UserCog, roles: ["tenant", "super_admin"] },
   { name: "Global Customers", href: "/admin/customers", icon: Users, roles: ["super_admin"] },
 ];

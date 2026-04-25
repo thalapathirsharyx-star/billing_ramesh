@@ -9,10 +9,12 @@ export class UserRoleModel extends BaseModel {
   @Type(() => String)
   name: string;
 
-  @IsNotEmpty({ message: 'User role code required' })
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   @Type(() => String)
   code: string;
+
+  @ApiProperty({ required: false })
+  permission: any;
 
 }
 

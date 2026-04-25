@@ -124,10 +124,6 @@ function Router() {
           <AppRoute component={Routes.Settings} />
         </Route>
         
-        {/* Team Management */}
-        <Route path="/settings/roles">
-          <AppRoute component={Routes.TenantRolesPage} />
-        </Route>
         <Route path="/settings/employees">
           <AppRoute component={Routes.EmployeeManagementPage} />
         </Route>
@@ -164,6 +160,9 @@ function Router() {
         </Route>
         <Route path="/masters/banks">
           <AppRoute component={Routes.BankAccountsPage} />
+        </Route>
+        <Route path="/masters/roles">
+          <AppRoute component={Routes.UserRolesPage} />
         </Route>
         <Route path="/masters/expense-categories">
           <AppRoute component={Routes.ExpenseCategoriesPage} />

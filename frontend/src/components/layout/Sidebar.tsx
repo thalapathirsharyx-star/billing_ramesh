@@ -50,7 +50,7 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
   {
     label: "POS & Billing",
     items: nav.filter(item => [
-      "POS Terminal", "Products", "Categories", "Sizes", "Customers", "Inventory", "Invoice Center"
+      "POS Terminal", "Products", "Categories", "Sizes", "Customers", "Inventory", "Invoice Center", "User Roles"
     ].includes(item.name ?? ""))
   },
   {
@@ -69,8 +69,8 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
   {
     label: "Settings & Management",
     items: [
-      ...nav.filter(item => ["Roles & Permissions", "Employee Management"].includes(item.name ?? "")),
-      ...bottomNav.filter(item => ["Settings", "Workspace", "Organization", "Team & Roles", "User Roles", "White Label", "Security", "Billing", "Audit Logs"].includes(item.name ?? ""))
+      ...nav.filter(item => ["Employee Management"].includes(item.name ?? "")),
+      ...bottomNav.filter(item => ["Settings", "Workspace", "Organization", "Team & Roles", "White Label", "Security", "Billing", "Audit Logs"].includes(item.name ?? ""))
     ]
   },
 ];

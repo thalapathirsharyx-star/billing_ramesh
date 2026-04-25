@@ -70,8 +70,8 @@ const EmployeeManagementPage: React.FC = () => {
         CommonService.GetAll("/employee/List"),
         CommonService.GetAll("/tenant-role/List")
       ]);
-      setEmployees(empRes.result || []);
-      setRoles(rolesRes.result || []);
+      setEmployees(Array.isArray(empRes) ? empRes : (empRes.result || []));
+      setRoles(Array.isArray(rolesRes) ? rolesRes : (rolesRes.result || []));
     } catch (error) {
       toast.error("Failed to fetch data");
     } finally {
@@ -200,7 +200,9 @@ const EmployeeManagementPage: React.FC = () => {
                     <SelectValue placeholder="Select Role" />
                   </SelectTrigger>
                   <SelectContent>
-                    {roles.map(role => (
+                    {roles
+                      .filter(role => role.code !== 'TENANT' && role.code !== 'USER')
+                      .map(role => (
                       <SelectItem key={role.id} value={role.id}>{role.name}</SelectItem>
                     ))}
                   </SelectContent>
