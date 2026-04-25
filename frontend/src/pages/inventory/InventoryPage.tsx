@@ -76,42 +76,42 @@ const InventoryPage: React.FC = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-8">
+      <div className="page-header-brand flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">Stock Control</h1>
-          <p className="text-slate-400">Monitor and adjust inventory levels across your store</p>
+          <p className="text-blue-100/80 font-medium">Monitor and adjust inventory levels across your store</p>
         </div>
-        <Button variant="outline" size="icon" onClick={fetchData} disabled={isLoading}>
+        <Button variant="outline" size="icon" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-xl" onClick={fetchData} disabled={isLoading}>
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-card p-6 rounded-2xl border shadow-sm flex items-center gap-4">
-          <div className="p-3 bg-blue-100 text-blue-700 rounded-xl">
+        <div className="bg-card p-6 rounded-[32px] border border-border shadow-sm flex items-center gap-4">
+          <div className="p-3 bg-blue-500/10 text-blue-400 rounded-xl">
             <Search className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-sm text-muted-foreground font-medium uppercase tracking-wider">Total SKUs</div>
-            <div className="text-2xl font-bold">{products.length}</div>
+            <div className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Total SKUs</div>
+            <div className="text-2xl font-black text-white">{products.length}</div>
           </div>
         </div>
         
-        <div className={`bg-card p-6 rounded-2xl border shadow-sm flex items-center gap-4 ${lowStockCount > 0 ? 'border-red-500/50 bg-red-500/5' : ''}`}>
-          <div className={`p-3 rounded-xl ${lowStockCount > 0 ? 'bg-red-500/10 text-red-500' : 'bg-muted text-muted-foreground'}`}>
+        <div className={`bg-card p-6 rounded-[32px] border border-border shadow-sm flex items-center gap-4 ${lowStockCount > 0 ? 'border-red-500/50 bg-red-500/5' : ''}`}>
+          <div className={`p-3 rounded-xl ${lowStockCount > 0 ? 'bg-red-500/10 text-red-500' : 'bg-slate-900 text-slate-500'}`}>
             <AlertTriangle className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-sm text-muted-foreground font-medium uppercase tracking-wider">Low Stock Alerts</div>
-            <div className={`text-2xl font-bold ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}>{lowStockCount} Items</div>
+            <div className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Low Stock Alerts</div>
+            <div className={`text-2xl font-black ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}>{lowStockCount} Items</div>
           </div>
         </div>
       </div>
 
-      <div className="bg-card rounded-2xl border border-border shadow-sm p-4 mb-6">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm p-4 mb-6">
         <Input 
           placeholder="Search inventory by product name or SKU..." 
-          className="bg-slate-900 border-none rounded-xl h-12 text-white"
+          className="bg-slate-900 border-none rounded-2xl h-12 text-white font-bold placeholder:text-slate-600"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

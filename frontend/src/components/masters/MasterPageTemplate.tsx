@@ -128,7 +128,7 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
           <Button variant="outline" size="icon" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-xl" onClick={fetchItems} disabled={isLoading}>
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
-          <Button className="btn-brand bg-primary text-primary-foreground hover:bg-primary/90 border-none" onClick={handleAddItem}>
+          <Button className="btn-brand bg-white text-slate-900 hover:bg-slate-100 border-none h-12 px-6 rounded-2xl font-black shadow-lg shadow-black/5" onClick={handleAddItem}>
             <Plus className="w-4 h-4 mr-2" />
             Add {itemName}
           </Button>
@@ -140,7 +140,7 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <Input 
             placeholder={`Search ${itemName}s...`} 
-            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-medium text-white"
+            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-bold text-white placeholder:text-slate-600"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -200,8 +200,8 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
               />
             </div>
             <DialogFooter className="pt-2">
-              <Button type="button" variant="ghost" onClick={() => setIsFormOpen(false)} className="rounded-2xl h-12 px-8 font-black uppercase tracking-widest text-slate-400">Cancel</Button>
-              <Button type="submit" className="rounded-2xl h-12 px-8 font-black uppercase tracking-widest bg-primary shadow-lg shadow-primary/20">Save {itemName}</Button>
+              <Button type="button" variant="ghost" onClick={() => setIsFormOpen(false)} className="rounded-2xl h-12 px-8 font-black uppercase tracking-widest text-slate-500 hover:bg-white/5 transition-colors">Cancel</Button>
+              <Button type="submit" className="rounded-2xl h-12 px-8 font-black uppercase tracking-widest bg-white text-slate-900 shadow-xl shadow-black/20 hover:bg-slate-100 transition-colors">Save {itemName}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
