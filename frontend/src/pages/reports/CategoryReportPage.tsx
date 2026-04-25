@@ -40,7 +40,7 @@ const CategoryReportPage: React.FC = () => {
   }, [user, startDate, endDate]);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-brand-bg">
+    <div className="p-6 max-w-7xl mx-auto min-h-screen">
       <div className="page-header-brand flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">Category Performance</h1>
@@ -67,46 +67,46 @@ const CategoryReportPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm flex items-center gap-6">
-          <div className="h-16 w-16 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 shrink-0">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm flex items-center gap-6">
+          <div className="h-16 w-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 shrink-0">
             <Layers size={32} />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-widest font-black text-slate-400">Best Category</p>
-            <h3 className="text-2xl font-black text-slate-900">{data[0]?.name || 'N/A'}</h3>
+            <p className="text-[10px] uppercase tracking-widest font-black text-slate-500">Best Category</p>
+            <h3 className="text-2xl font-black text-white">{data[0]?.name || 'N/A'}</h3>
           </div>
         </div>
 
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm flex items-center gap-6">
-          <div className="h-16 w-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm flex items-center gap-6">
+          <div className="h-16 w-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-400 shrink-0">
             <TrendingUp size={32} />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-widest font-black text-slate-400">Total Profit</p>
-            <h3 className="text-2xl font-black text-slate-900">₹{data.reduce((sum, c) => sum + c.profit, 0).toLocaleString()}</h3>
+            <p className="text-[10px] uppercase tracking-widest font-black text-slate-500">Total Profit</p>
+            <h3 className="text-2xl font-black text-white">₹{data.reduce((sum, c) => sum + c.profit, 0).toLocaleString()}</h3>
           </div>
         </div>
 
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm flex items-center gap-6">
-          <div className="h-16 w-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shrink-0">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm flex items-center gap-6">
+          <div className="h-16 w-16 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-400 shrink-0">
             <DollarSign size={32} />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-widest font-black text-slate-400">Total Units Sold</p>
-            <h3 className="text-2xl font-black text-slate-900">{data.reduce((sum, c) => sum + c.total_quantity, 0).toLocaleString()}</h3>
+            <p className="text-[10px] uppercase tracking-widest font-black text-slate-500">Total Units Sold</p>
+            <h3 className="text-2xl font-black text-white">{data.reduce((sum, c) => sum + c.total_quantity, 0).toLocaleString()}</h3>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
         <Table>
-          <TableHeader className="bg-slate-50/50">
-            <TableRow className="hover:bg-transparent border-slate-100">
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 pl-6">Category Name</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-center">Units Sold</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right">Revenue</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right">Cost (COGS)</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right pr-6">Profit</TableHead>
+          <TableHeader className="bg-slate-900/50">
+            <TableRow className="hover:bg-transparent border-slate-800">
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 pl-6">Category Name</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-center">Units Sold</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right">Revenue</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right">Cost (COGS)</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right pr-6">Profit</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -116,14 +116,14 @@ const CategoryReportPage: React.FC = () => {
               <TableRow><TableCell colSpan={5} className="text-center py-20 text-muted-foreground">No data for selected period</TableCell></TableRow>
             ) : (
               data.map((cat) => (
-                <TableRow key={cat.name} className="hover:bg-slate-50/50 border-slate-50 transition-colors">
+                <TableRow key={cat.name} className="hover:bg-white/5 border-slate-800 transition-colors">
                   <TableCell className="py-4 pl-6">
-                    <div className="font-black text-slate-900">{cat.name}</div>
+                    <div className="font-black text-white">{cat.name}</div>
                   </TableCell>
-                  <TableCell className="text-center font-bold text-slate-600 py-4">{cat.total_quantity}</TableCell>
-                  <TableCell className="text-right font-black text-slate-900 py-4">₹{cat.total_sales.toLocaleString()}</TableCell>
-                  <TableCell className="text-right font-medium text-slate-400 py-4">₹{cat.total_cost.toLocaleString()}</TableCell>
-                  <TableCell className={`text-right pr-6 py-4 font-black ${cat.profit >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                  <TableCell className="text-center font-bold text-slate-400 py-4">{cat.total_quantity}</TableCell>
+                  <TableCell className="text-right font-black text-white py-4">₹{cat.total_sales.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-medium text-slate-500 py-4">₹{cat.total_cost.toLocaleString()}</TableCell>
+                  <TableCell className={`text-right pr-6 py-4 font-black ${cat.profit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                     <div className="flex justify-end items-center gap-1">
                       {cat.profit >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                       ₹{cat.profit.toLocaleString()}

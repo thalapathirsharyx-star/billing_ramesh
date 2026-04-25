@@ -75,7 +75,7 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ onProductFound }) => {
             }}
             onKeyDown={(e) => e.key === 'Enter' && handleExactSearch()}
             onFocus={() => query.length >= 2 && setShowSuggestions(true)}
-            className="h-12 px-5 rounded-xl bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
+            className="h-12 px-5 rounded-xl bg-slate-900 border-slate-800 focus:bg-slate-950 focus:border-primary transition-all text-white placeholder:text-slate-600"
           />
           {isSearching && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -91,12 +91,12 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ onProductFound }) => {
 
       {/* Suggestions Dropdown */}
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute z-50 w-full mt-2 bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="max-h-[300px] overflow-y-auto">
             {suggestions.map((p) => (
               <button
                 key={p.id}
-                className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0"
+                className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-800 transition-colors border-b border-slate-800 last:border-0"
                 onClick={() => {
                   onProductFound(p);
                   setQuery('');
@@ -110,8 +110,8 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ onProductFound }) => {
                     {p.name.charAt(0)}
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-slate-900">{p.name}</div>
-                    <div className="text-xs text-slate-500 font-medium">SKU: {p.sku} | Barcode: {p.barcode}</div>
+                    <div className="font-bold text-white">{p.name}</div>
+                    <div className="text-[10px] text-slate-500 font-black uppercase tracking-wider">SKU: {p.sku} | Barcode: {p.barcode}</div>
                   </div>
                 </div>
                 <div className="text-right">

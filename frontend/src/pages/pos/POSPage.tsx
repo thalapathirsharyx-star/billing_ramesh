@@ -65,7 +65,7 @@ const POSContent: React.FC = () => {
               <button 
                 key={cart.id}
                 onClick={() => handleResumeCart(cart)}
-                className="px-4 py-2 bg-amber-50 text-amber-700 border border-amber-100 rounded-2xl text-[10px] font-black hover:bg-amber-100 transition-all flex items-center gap-2 whitespace-nowrap"
+                className="px-4 py-2 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-2xl text-[10px] font-black hover:bg-amber-500/20 transition-all flex items-center gap-2 whitespace-nowrap"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                 HELD #{idx + 1}
@@ -83,7 +83,7 @@ const POSContent: React.FC = () => {
             size="sm" 
             onClick={handleHoldCart} 
             disabled={items.length === 0} 
-            className="rounded-xl border-slate-200 font-bold text-xs h-10 px-6"
+            className="rounded-xl border-slate-800 bg-slate-900 text-white font-bold text-xs h-10 px-6 hover:bg-slate-800"
           >
             Hold Cart
           </Button>
@@ -103,7 +103,7 @@ const POSContent: React.FC = () => {
         <div className="lg:col-span-8 flex flex-col gap-6">
           {/* Scanner Overlay */}
           {showScanner && (
-            <div className="bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl relative border-4 border-white aspect-video max-w-2xl mx-auto ring-1 ring-slate-200 animate-in zoom-in-95 duration-300">
+            <div className="bg-slate-900 rounded-[32px] overflow-hidden shadow-2xl relative border-4 border-slate-800 aspect-video max-w-2xl mx-auto ring-1 ring-slate-800 animate-in zoom-in-95 duration-300">
               <BarcodeScanner onScan={handleProductFound} />
               <div className="absolute inset-0 border-[40px] border-black/20 pointer-events-none" />
               <button 
@@ -136,7 +136,7 @@ const POSContent: React.FC = () => {
                 Cart Items 
                 <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full">{items.length}</span>
               </h2>
-              <Button variant="ghost" size="sm" onClick={clearCart} className="text-slate-400 hover:text-red-500 hover:bg-red-50 font-bold text-[10px] uppercase tracking-widest">
+              <Button variant="ghost" size="sm" onClick={clearCart} className="text-slate-500 hover:text-red-400 hover:bg-red-500/10 font-bold text-[10px] uppercase tracking-widest">
                 Clear All
               </Button>
             </div>

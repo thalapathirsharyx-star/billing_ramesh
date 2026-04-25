@@ -335,7 +335,7 @@ const Checkout: React.FC = () => {
               />
             </div>
             {paidAmount !== null && paidAmount < finalTotal && (
-              <p className="text-[10px] text-amber-600 font-bold mt-2 uppercase tracking-wider flex items-center gap-1">
+              <p className="text-[10px] text-amber-500 font-bold mt-2 uppercase tracking-wider flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                 Remaining ₹{(finalTotal - paidAmount).toLocaleString()} will be added to Customer Credit
               </p>
@@ -352,7 +352,7 @@ const Checkout: React.FC = () => {
                   key={pct}
                   onClick={() => { setDiscount(pct); setDiscountAmount(0); }}
                   className={`flex-1 py-2 rounded-xl text-[10px] font-black transition-all ${
-                    discount === pct ? 'bg-primary text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                    discount === pct ? 'bg-primary text-white shadow-[0_0_15px_rgba(34,211,238,0.3)]' : 'bg-slate-900 text-slate-500 hover:bg-slate-800 border border-slate-800'
                   }`}
                 >
                   {pct}% OFF
@@ -360,7 +360,7 @@ const Checkout: React.FC = () => {
               ))}
               <button 
                 onClick={() => { setDiscount(0); setDiscountAmount(0); }}
-                className="px-3 py-2 rounded-xl bg-slate-50 text-slate-500 text-[10px] font-black hover:bg-slate-100"
+                className="px-3 py-2 rounded-xl bg-slate-800 text-slate-400 text-[10px] font-black hover:bg-slate-700 border border-slate-700"
               >
                 Reset
               </button>
@@ -370,7 +370,7 @@ const Checkout: React.FC = () => {
               value={discount || ''}
               onChange={(e) => setDiscount(Number(e.target.value))}
               placeholder="Custom %"
-              className="h-10 rounded-xl bg-slate-50 border-slate-100 mb-3"
+              className="h-10 rounded-xl bg-slate-900 border-slate-800 text-white mb-3 focus:bg-slate-950"
             />
             <Label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-2 block">Flat Amount Discount (₹)</Label>
             <div className="flex gap-2 mb-3">
@@ -379,7 +379,7 @@ const Checkout: React.FC = () => {
                   key={amt}
                   onClick={() => { setDiscountAmount(amt); setDiscount(0); }}
                   className={`flex-1 py-2 rounded-xl text-[10px] font-black transition-all ${
-                    discountAmount === amt ? 'bg-emerald-600 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                    discountAmount === amt ? 'bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-900 text-slate-500 hover:bg-slate-800 border border-slate-800'
                   }`}
                 >
                   ₹{amt}
@@ -391,7 +391,7 @@ const Checkout: React.FC = () => {
               value={discountAmount || ''}
               onChange={(e) => setDiscountAmount(Number(e.target.value))}
               placeholder="Enter custom amount..."
-              className="h-10 rounded-xl bg-slate-50 border-slate-100"
+              className="h-10 rounded-xl bg-slate-900 border-slate-800 text-white focus:bg-slate-950"
             />
           </div>
         </div>

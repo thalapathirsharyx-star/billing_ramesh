@@ -36,7 +36,7 @@ const BusinessPNLPage: React.FC = () => {
   const profitMargin = data?.total_sales > 0 ? (data.net_profit / data.total_sales) * 100 : 0;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-brand-bg">
+    <div className="p-6 max-w-7xl mx-auto min-h-screen">
       <div className="page-header-brand flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">Business P&L</h1>
@@ -63,22 +63,22 @@ const BusinessPNLPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 text-blue-500"><ShoppingBag size={60} /></div>
-          <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Total Sales</p>
-          <h3 className="text-3xl font-black text-slate-900">₹{data?.total_sales.toLocaleString()}</h3>
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 text-blue-400"><ShoppingBag size={60} /></div>
+          <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">Total Sales</p>
+          <h3 className="text-3xl font-black text-white">₹{data?.total_sales.toLocaleString()}</h3>
         </div>
         
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 text-orange-500"><Wallet size={60} /></div>
-          <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Total Cost (CP)</p>
-          <h3 className="text-3xl font-black text-slate-900">₹{data?.total_cost.toLocaleString()}</h3>
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 text-orange-400"><Wallet size={60} /></div>
+          <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">Total Cost (CP)</p>
+          <h3 className="text-3xl font-black text-white">₹{data?.total_cost.toLocaleString()}</h3>
         </div>
 
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 text-purple-500"><Receipt size={60} /></div>
-          <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Taxes & Discounts</p>
-          <h3 className="text-3xl font-black text-slate-900">₹{(data?.total_tax + data?.total_discount).toLocaleString()}</h3>
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 text-purple-400"><Receipt size={60} /></div>
+          <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">Taxes & Discounts</p>
+          <h3 className="text-3xl font-black text-white">₹{(data?.total_tax + data?.total_discount).toLocaleString()}</h3>
         </div>
 
         <div className={`rounded-[32px] p-8 border shadow-lg relative overflow-hidden group ${data?.net_profit >= 0 ? 'bg-emerald-500 border-emerald-400' : 'bg-red-500 border-red-400'}`}>
@@ -91,31 +91,31 @@ const BusinessPNLPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm p-10">
-        <h2 className="text-2xl font-black text-slate-900 mb-8">Profitability Breakdown</h2>
+      <div className="bg-card rounded-[32px] border border-border shadow-sm p-10">
+        <h2 className="text-2xl font-black text-white mb-8">Profitability Breakdown</h2>
         
         <div className="space-y-12">
           {/* Visual Bar */}
           <div className="space-y-4">
             <div className="flex justify-between text-[10px] uppercase tracking-widest font-black">
-              <span className="text-slate-400">Revenue Flow</span>
-              <span className="text-slate-900">₹{data?.total_sales.toLocaleString()} Total</span>
+              <span className="text-slate-500">Revenue Flow</span>
+              <span className="text-white">₹{data?.total_sales.toLocaleString()} Total</span>
             </div>
-            <div className="h-12 w-full bg-slate-100 rounded-2xl flex overflow-hidden p-1">
+            <div className="h-12 w-full bg-slate-900 rounded-2xl flex overflow-hidden p-1 border border-slate-800">
               <div 
-                className="h-full bg-orange-400 rounded-l-xl flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
+                className="h-full bg-orange-500 rounded-l-xl flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
                 style={{ width: `${(data?.total_cost / data?.total_sales) * 100}%` }}
               >
                 COST
               </div>
               <div 
-                className="h-full bg-purple-400 flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
+                className="h-full bg-purple-500 flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
                 style={{ width: `${((data?.total_tax + data?.total_discount) / data?.total_sales) * 100}%` }}
               >
                 TAX/DISC
               </div>
               <div 
-                className="h-full bg-red-400 flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
+                className="h-full bg-red-500 flex items-center justify-center text-[10px] font-black text-white px-2 transition-all duration-500"
                 style={{ width: `${(data?.total_expenses / data?.total_sales) * 100}%` }}
               >
                 EXP
@@ -129,58 +129,58 @@ const BusinessPNLPage: React.FC = () => {
             </div>
             <div className="flex flex-wrap gap-6 mt-4">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-orange-400 rounded-full" />
-                <span className="text-xs font-bold text-slate-600">Product Cost ({( (data?.total_cost / data?.total_sales) * 100).toFixed(1)}%)</span>
+                <div className="w-3 h-3 bg-orange-500 rounded-full" />
+                <span className="text-xs font-bold text-slate-400">Product Cost ({( (data?.total_cost / data?.total_sales) * 100).toFixed(1)}%)</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-purple-400 rounded-full" />
-                <span className="text-xs font-bold text-slate-600">Tax & Discounts ({( ((data?.total_tax + data?.total_discount) / data?.total_sales) * 100).toFixed(1)}%)</span>
+                <div className="w-3 h-3 bg-purple-500 rounded-full" />
+                <span className="text-xs font-bold text-slate-400">Tax & Discounts ({( ((data?.total_tax + data?.total_discount) / data?.total_sales) * 100).toFixed(1)}%)</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-400 rounded-full" />
-                <span className="text-xs font-bold text-slate-600">Expenses ({( (data?.total_expenses / data?.total_sales) * 100).toFixed(1)}%)</span>
+                <div className="w-3 h-3 bg-red-500 rounded-full" />
+                <span className="text-xs font-bold text-slate-400">Expenses ({( (data?.total_expenses / data?.total_sales) * 100).toFixed(1)}%)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-emerald-500 rounded-full" />
-                <span className="text-xs font-bold text-slate-600">Net Margin ({profitMargin.toFixed(1)}%)</span>
+                <span className="text-xs font-bold text-slate-400">Net Margin ({profitMargin.toFixed(1)}%)</span>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 border-t border-slate-50 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 border-t border-slate-800 pt-10">
             <div className="space-y-6">
-              <h4 className="text-[10px] uppercase tracking-widest font-black text-slate-400">Income Summary</h4>
-              <div className="flex justify-between items-center py-2 border-b border-slate-50">
-                <span className="font-bold text-slate-600">Gross Sales</span>
-                <span className="font-black text-slate-900">₹{data?.total_sales.toLocaleString()}</span>
+              <h4 className="text-[10px] uppercase tracking-widest font-black text-slate-500">Income Summary</h4>
+              <div className="flex justify-between items-center py-2 border-b border-slate-800">
+                <span className="font-bold text-slate-400">Gross Sales</span>
+                <span className="font-black text-white">₹{data?.total_sales.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-slate-50">
-                <span className="font-bold text-slate-600">Invoice Count</span>
-                <span className="font-black text-slate-900">{data?.invoice_count}</span>
+              <div className="flex justify-between items-center py-2 border-b border-slate-800">
+                <span className="font-bold text-slate-400">Invoice Count</span>
+                <span className="font-black text-white">{data?.invoice_count}</span>
               </div>
               <div className="flex justify-between items-center py-2">
-                <span className="font-bold text-slate-600">Avg. Basket Value</span>
-                <span className="font-black text-slate-900">₹{data?.invoice_count > 0 ? (data.total_sales / data.invoice_count).toFixed(0) : 0}</span>
+                <span className="font-bold text-slate-400">Avg. Basket Value</span>
+                <span className="font-black text-white">₹{data?.invoice_count > 0 ? (data.total_sales / data.invoice_count).toFixed(0) : 0}</span>
               </div>
             </div>
 
             <div className="space-y-6">
-              <h4 className="text-[10px] uppercase tracking-widest font-black text-slate-400">Expenses Snapshot</h4>
-              <div className="flex justify-between items-center py-2 border-b border-slate-50">
-                <span className="font-bold text-slate-600">Cost of Goods Sold (COGS)</span>
-                <span className="font-black text-slate-900">₹{data?.total_cost.toLocaleString()}</span>
+              <h4 className="text-[10px] uppercase tracking-widest font-black text-slate-500">Expenses Snapshot</h4>
+              <div className="flex justify-between items-center py-2 border-b border-slate-800">
+                <span className="font-bold text-slate-400">Cost of Goods Sold (COGS)</span>
+                <span className="font-black text-white">₹{data?.total_cost.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-slate-50">
-                <span className="font-bold text-slate-600">Tax Collected</span>
-                <span className="font-black text-slate-900">₹{data?.total_tax.toLocaleString()}</span>
+              <div className="flex justify-between items-center py-2 border-b border-slate-800">
+                <span className="font-bold text-slate-400">Tax Collected</span>
+                <span className="font-black text-white">₹{data?.total_tax.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-slate-50">
-                <span className="font-bold text-slate-600">Discounts Given</span>
-                <span className="font-black text-slate-900">₹{data?.total_discount.toLocaleString()}</span>
+              <div className="flex justify-between items-center py-2 border-b border-slate-800">
+                <span className="font-bold text-slate-400">Discounts Given</span>
+                <span className="font-black text-white">₹{data?.total_discount.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center py-2">
-                <span className="font-bold text-slate-600">Operational Expenses</span>
-                <span className="font-black text-red-500">₹{data?.total_expenses?.toLocaleString() || 0}</span>
+                <span className="font-bold text-slate-400">Operational Expenses</span>
+                <span className="font-black text-red-400">₹{data?.total_expenses?.toLocaleString() || 0}</span>
               </div>
             </div>
           </div>

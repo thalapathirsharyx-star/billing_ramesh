@@ -42,7 +42,7 @@ const BillProfitPage: React.FC = () => {
   const totalProfit = data.reduce((sum, item) => sum + item.profit, 0);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-brand-bg">
+    <div className="p-6 max-w-7xl mx-auto min-h-screen">
       <div className="page-header-brand flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">Bill Profit Analysis</h1>
@@ -69,44 +69,44 @@ const BillProfitPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-slate-400">
             <FileText size={80} />
           </div>
-          <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Total Bills</p>
-          <h3 className="text-4xl font-black text-slate-900">{data.length}</h3>
+          <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">Total Bills</p>
+          <h3 className="text-4xl font-black text-white">{data.length}</h3>
         </div>
         
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-slate-400">
             <TrendingUp size={80} />
           </div>
-          <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Cumulative Profit</p>
-          <h3 className={`text-4xl font-black ${totalProfit >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+          <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">Cumulative Profit</p>
+          <h3 className={`text-4xl font-black ${totalProfit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
             ₹{totalProfit.toLocaleString()}
           </h3>
         </div>
 
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-slate-400">
             <TrendingUp size={80} />
           </div>
-          <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Avg Profit per Bill</p>
-          <h3 className="text-4xl font-black text-slate-900">
+          <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">Avg Profit per Bill</p>
+          <h3 className="text-4xl font-black text-white">
             ₹{data.length > 0 ? (totalProfit / data.length).toFixed(0) : 0}
           </h3>
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
         <Table>
-          <TableHeader className="bg-slate-50/50">
-            <TableRow className="hover:bg-transparent border-slate-100">
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 pl-6">Bill Details</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4">Customer</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right">Total CP</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right">Total SP</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right pr-6">Profit</TableHead>
+          <TableHeader className="bg-slate-900/50">
+            <TableRow className="hover:bg-transparent border-slate-800">
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 pl-6">Bill Details</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4">Customer</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right">Total CP</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right">Total SP</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right pr-6">Profit</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -116,15 +116,15 @@ const BillProfitPage: React.FC = () => {
               <TableRow><TableCell colSpan={5} className="text-center py-20 text-muted-foreground">No bills found for the selected period</TableCell></TableRow>
             ) : (
               data.map((inv) => (
-                <TableRow key={inv.id} className="hover:bg-slate-50/50 border-slate-50 transition-colors">
+                <TableRow key={inv.id} className="hover:bg-white/5 border-slate-800 transition-colors">
                   <TableCell className="py-4 pl-6">
-                    <div className="font-black text-slate-900">{inv.invoice_number}</div>
-                    <div className="text-[10px] text-slate-400 font-bold">{format(new Date(inv.created_on), 'dd MMM yyyy, hh:mm a')}</div>
+                    <div className="font-black text-white">{inv.invoice_number}</div>
+                    <div className="text-[10px] text-slate-500 font-bold">{format(new Date(inv.created_on), 'dd MMM yyyy, hh:mm a')}</div>
                   </TableCell>
-                  <TableCell className="font-bold text-slate-600">{inv.customer_name}</TableCell>
-                  <TableCell className="text-right font-medium text-slate-400">₹{inv.total_cp.toLocaleString()}</TableCell>
-                  <TableCell className="text-right font-black text-slate-900">₹{inv.total_sp.toLocaleString()}</TableCell>
-                  <TableCell className={`text-right pr-6 font-black ${inv.profit >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                  <TableCell className="font-bold text-slate-400">{inv.customer_name}</TableCell>
+                  <TableCell className="text-right font-medium text-slate-500">₹{inv.total_cp.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-black text-white">₹{inv.total_sp.toLocaleString()}</TableCell>
+                  <TableCell className={`text-right pr-6 font-black ${inv.profit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                     <div className="flex justify-end items-center gap-1">
                       {inv.profit >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                       ₹{inv.profit.toLocaleString()}

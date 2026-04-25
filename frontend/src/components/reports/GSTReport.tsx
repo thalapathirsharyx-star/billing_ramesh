@@ -18,10 +18,10 @@ const GSTReport: React.FC<GSTReportProps> = ({ data = [] }) => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex justify-between items-center">
+      <div className="bg-amber-500/10 p-6 rounded-2xl border border-amber-500/20 flex justify-between items-center">
         <div>
-          <div className="text-sm text-amber-700 font-bold uppercase tracking-widest">Total Tax Collected</div>
-          <div className="text-4xl font-black text-amber-900">₹{totalGST.toLocaleString()}</div>
+          <div className="text-sm text-amber-500 font-bold uppercase tracking-widest">Total Tax Collected</div>
+          <div className="text-4xl font-black text-amber-400">₹{totalGST.toLocaleString()}</div>
         </div>
       </div>
 
@@ -37,11 +37,11 @@ const GSTReport: React.FC<GSTReportProps> = ({ data = [] }) => {
           </TableHeader>
           <TableBody>
             {safeData.map((item, idx) => (
-              <TableRow key={idx}>
-                <TableCell className="font-bold">{item.gst_percentage}% GST</TableCell>
-                <TableCell>₹{(item.taxable_value || 0).toLocaleString()}</TableCell>
-                <TableCell className="text-amber-700 font-medium">₹{(item.gst_amount || 0).toLocaleString()}</TableCell>
-                <TableCell className="text-right font-bold">₹{(item.total || 0).toLocaleString()}</TableCell>
+              <TableRow key={idx} className="hover:bg-white/5 border-slate-800">
+                <TableCell className="font-bold text-white">{item.gst_percentage}% GST</TableCell>
+                <TableCell className="text-slate-400">₹{(item.taxable_value || 0).toLocaleString()}</TableCell>
+                <TableCell className="text-amber-500 font-medium">₹{(item.gst_amount || 0).toLocaleString()}</TableCell>
+                <TableCell className="text-right font-bold text-white">₹{(item.total || 0).toLocaleString()}</TableCell>
               </TableRow>
             ))}
             {safeData.length === 0 && (

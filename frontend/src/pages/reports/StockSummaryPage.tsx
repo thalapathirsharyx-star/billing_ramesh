@@ -93,7 +93,7 @@ const StockSummaryPage: React.FC = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <Input 
             placeholder="Search items or SKU..." 
-            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-medium text-white"
+            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-bold text-white placeholder:text-slate-600"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -128,7 +128,7 @@ const StockSummaryPage: React.FC = () => {
                     <div className="text-[10px] text-slate-500 font-bold">Size: {item.size}</div>
                   </TableCell>
                   <TableCell className="text-center py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black ${item.quantity <= 5 ? 'bg-red-500/10 text-red-500 border border-red-500/20' : 'bg-slate-800 text-slate-400'}`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black ${item.quantity <= 5 ? 'bg-red-500/10 text-red-500 border border-red-500/20' : 'bg-slate-800 text-slate-500'}`}>
                       {item.quantity}
                     </span>
                   </TableCell>
