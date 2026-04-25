@@ -60,4 +60,6 @@ export class company extends BaseTable {
   @Column({ type: 'json', nullable: true })
   custom_fields: any;
 
+  @Column({ type: "decimal", precision: 10, scale: 2, default: 0, transformer: { to: (v: any) => v, from: (v: any) => parseFloat(v) } })
+  area: number;
 }

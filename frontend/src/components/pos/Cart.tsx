@@ -123,10 +123,7 @@ const Cart: React.FC = () => {
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Total Items</p>
             <p className="text-xl font-black text-white">{items.reduce((acc, item) => acc + item.quantity, 0)}</p>
           </div>
-          <TotalWeightDisplay 
-            qty={items.reduce((acc, item) => acc + item.quantity, 0)} 
-            gsm={items[0]?.gsm || 0}
-          />
+          <TotalWeightDisplay items={items} />
         </div>
       </div>
     </div>

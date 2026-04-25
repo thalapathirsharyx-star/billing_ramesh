@@ -425,10 +425,7 @@ const Checkout: React.FC = () => {
         </div>
         
         <div className="pt-4 border-t border-slate-800 flex justify-between items-end">
-          <TotalWeightDisplay 
-            qty={items.reduce((acc, item) => acc + item.quantity, 0)} 
-            gsm={items[0]?.gsm || 0} 
-          />
+          <TotalWeightDisplay items={items} />
           <div className="text-right space-y-1">
             <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Grand Total</p>
             <p className="text-5xl font-black text-white leading-none">₹{finalTotal.toLocaleString()}</p>

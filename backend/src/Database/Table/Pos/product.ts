@@ -47,6 +47,9 @@ export class product extends BaseTable {
   @Column({ type: "boolean", default: false })
   track_serials: boolean;
 
+  @Column({ type: "decimal", precision: 10, scale: 2, default: 0, transformer: { to: (v: any) => v, from: (v: any) => parseFloat(v) } })
+  gsm: number;
+
   @ManyToOne(() => company, { onDelete: "RESTRICT" })
   @JoinColumn({ name: "store_id" })
   store: company;
