@@ -40,6 +40,7 @@ const productSchema = z.object({
   selling_price: z.number().min(0),
   gst_percentage: z.number().min(0).max(100),
   category: z.string().min(1, "Category is required"),
+  reorder_level: z.number().int().min(0).default(5),
   variants: z.array(z.object({
     size: z.string().min(1, "Size is required"),
     color: z.string().optional(),
@@ -69,6 +70,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
       selling_price: 0,
       gst_percentage: 12,
       category: '',
+      reorder_level: 5,
       variants: [{ size: '', color: '', quantity: 0 }],
     },
   });
@@ -120,6 +122,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
         selling_price: 0,
         gst_percentage: 12,
         category: '',
+        reorder_level: 5,
         variants: [{ size: '', color: '', quantity: 0 }],
       });
     }
@@ -256,6 +259,20 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, isOpen, onClose, onS
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="reorder_level"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-[10px] uppercase tracking-widest font-black text-slate-400">Low Stock Threshold</FormLabel>
+                    <FormControl>
+                      <Input type="number" className="h-12 rounded-2xl bg-slate-50 border-slate-100" {...field} onChange={e => field.onChange(Number(e.target.value))} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

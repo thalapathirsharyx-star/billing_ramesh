@@ -58,6 +58,12 @@ export class ProductModel extends BaseModel {
   @Type(() => Number)
   quantity_in_stock: number;
 
+  @IsOptional()
+  @IsNumber()
+  @ApiProperty({ required: false, default: 5 })
+  @Type(() => Number)
+  reorder_level: number;
+
   @IsNotEmpty({ message: 'Store ID required' })
   @ApiProperty({ required: true })
   @Type(() => String)

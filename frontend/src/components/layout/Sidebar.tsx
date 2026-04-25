@@ -24,6 +24,7 @@ import { CommonService } from "@/service/commonservice.page";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { allNavigation, allBottomNav } from "@/config/navigation";
+import { AnalyticsService } from "@/service/analytics.service";
 import {
   Tooltip,
   TooltipContent,
@@ -69,7 +70,7 @@ export const getNavSections = (nav: any[], bottomNav: any[]) => [
   },
 ];
 
-export const NavItem = ({ item, isActive, isCollapsed = false, isMobile = false }: { item: any; isActive: boolean; isCollapsed?: boolean; isMobile?: boolean }) => (
+export const NavItem = ({ item, isActive, isCollapsed = false, isMobile = false, badgeCount = 0 }: { item: any; isActive: boolean; isCollapsed?: boolean; isMobile?: boolean; badgeCount?: number }) => (
   <Link
     href={item.href}
     className={cn(
@@ -92,15 +93,25 @@ export const NavItem = ({ item, isActive, isCollapsed = false, isMobile = false 
       )}
     />
     {(!isCollapsed || isMobile) && (
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
-        className="whitespace-nowrap capitalize"
-      >
-        {item.name}
-      </motion.span>
+      <div className="flex-1 flex justify-between items-center">
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="whitespace-nowrap capitalize"
+        >
+          {item.name}
+        </motion.span>
+        {badgeCount > 0 && (
+          <span className="bg-red-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full animate-pulse">
+            {badgeCount}
+          </span>
+        )}
+      </div>
+    )}
+    {isCollapsed && !isMobile && badgeCount > 0 && (
+      <div className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full animate-pulse" />
     )}
     {isActive && (
       <motion.div
@@ -121,6 +132,28 @@ export function Sidebar() {
   const { user } = useAuth();
   const { settings } = useBranding();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [lowStockCount, setLowStockCount] = useState(0);
+
+  useEffect(() => {
+    const fetchLowStock = async () => {
+      try {
+        const storeId = (user as any)?.company?.id;
+        if (!storeId) return;
+        const data = await AnalyticsService.GetLowStock(storeId);
+        setLowStockCount(data?.length || 0);
+      } catch (err) {
+        console.error("Failed to fetch low stock count", err);
+      }
+    };
+
+    if (user) {
+      fetchLowStock();
+      // Optionally refresh every 5 minutes
+      const interval = setInterval(fetchLowStock, 5 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [user]);
+
   const navSections = getNavSections(allNavigation, allBottomNav);
 
   const filteredSections = navSections.map(section => ({
@@ -188,7 +221,12 @@ export function Sidebar() {
                     <Tooltip key={item.name}>
                       <TooltipTrigger asChild>
                         <div>
-                          <NavItem item={item} isActive={isActive} isCollapsed={isCollapsed} />
+                          <NavItem 
+                            item={item} 
+                            isActive={isActive} 
+                            isCollapsed={isCollapsed} 
+                            badgeCount={item.name === "Low Stock" ? lowStockCount : 0}
+                          />
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="right" className="bg-white/80 backdrop-blur-md border-[#f0e8e2] text-foreground">
@@ -196,7 +234,13 @@ export function Sidebar() {
                       </TooltipContent>
                     </Tooltip>
                   ) : (
-                    <NavItem key={item.name} item={item} isActive={isActive} isCollapsed={isCollapsed} />
+                    <NavItem 
+                      key={item.name} 
+                      item={item} 
+                      isActive={isActive} 
+                      isCollapsed={isCollapsed} 
+                      badgeCount={item.name === "Low Stock" ? lowStockCount : 0}
+                    />
                   );
                 })}
               </nav>
