@@ -137,7 +137,7 @@ export default function AdminUsers() {
                             {user.firstName?.charAt(0) || user.username?.charAt(0)}
                           </div>
                           <div>
-                            <p className="font-medium">{user.firstName} {user.lastName}</p>
+                            <p className="font-medium">{(user.firstName || user.first_name) ? `${user.firstName || user.first_name} ${user.lastName || user.last_name || ''}` : (user.username || "System User")}</p>
                             <p className="text-xs text-muted-foreground">{user.email}</p>
                           </div>
                         </div>
@@ -153,8 +153,8 @@ export default function AdminUsers() {
                           }}
                         >
                           <SelectTrigger className="h-7 w-fit min-w-[130px] text-xs bg-transparent border-none pl-0 pr-2 focus:ring-0 gap-2">
-                            <Badge variant="secondary" className={cn("capitalize font-semibold text-[10px] h-5", roleColors[user.role] || "bg-gray-100 text-gray-600")}>
-                              {user.role?.replace('_', ' ') || "No Role"}
+                            <Badge variant="secondary" className={cn("capitalize font-semibold text-[10px] h-5", roleColors[user.user_role?.name] || "bg-gray-100 text-gray-600")}>
+                              {user.user_role?.name || "No Role"}
                             </Badge>
                           </SelectTrigger>
                           <SelectContent>
@@ -168,7 +168,7 @@ export default function AdminUsers() {
                       </TableCell>
 
                       <TableCell className="text-muted-foreground text-sm">
-                        {new Date(user.createdAt).toLocaleDateString()}
+                        {user.created_on ? new Date(user.created_on).toLocaleDateString() : 'N/A'}
                       </TableCell>
 
                       <TableCell className="text-right flex justify-end gap-2">
