@@ -46,10 +46,10 @@ const ReportsPage: React.FC = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <div className="flex flex-wrap justify-between items-end gap-6 mb-8 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
+      <div className="flex flex-wrap justify-between items-end gap-6 mb-8 bg-card p-8 rounded-[32px] border border-border shadow-sm">
         <div className="flex-1 min-w-[300px]">
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Business Analytics</h1>
-          <p className="text-muted-foreground text-sm font-medium">Detailed sales performance and tax compliance reports</p>
+          <h1 className="text-3xl font-black text-white tracking-tight">Business Analytics</h1>
+          <p className="text-slate-400 text-sm font-medium">Detailed sales performance and tax compliance reports</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-4">
@@ -58,7 +58,7 @@ const ReportsPage: React.FC = () => {
             <select 
               value={paymentMode}
               onChange={(e) => setPaymentMode(e.target.value)}
-              className="block w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold focus:bg-white transition-all appearance-none cursor-pointer hover:border-primary/30 min-w-[120px]"
+              className="block w-full h-11 px-4 rounded-xl border border-slate-800 bg-slate-900 text-xs font-bold text-white focus:bg-slate-950 transition-all appearance-none cursor-pointer hover:border-primary/30 min-w-[120px]"
             >
               <option value="All">All Methods</option>
               <option value="Cash">Cash</option>
@@ -72,7 +72,7 @@ const ReportsPage: React.FC = () => {
               type="date" 
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="block w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold focus:bg-white transition-all hover:border-primary/30"
+              className="block w-full h-11 px-4 rounded-xl border border-slate-800 bg-slate-900 text-xs font-bold text-white focus:bg-slate-950 transition-all hover:border-primary/30"
             />
           </div>
           <div className="space-y-1.5">
@@ -81,7 +81,7 @@ const ReportsPage: React.FC = () => {
               type="date" 
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="block w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold focus:bg-white transition-all hover:border-primary/30"
+              className="block w-full h-11 px-4 rounded-xl border border-slate-800 bg-slate-900 text-xs font-bold text-white focus:bg-slate-950 transition-all hover:border-primary/30"
             />
           </div>
           <Button variant="default" onClick={fetchReports} disabled={isLoading} className="rounded-xl h-11 px-8 font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20">

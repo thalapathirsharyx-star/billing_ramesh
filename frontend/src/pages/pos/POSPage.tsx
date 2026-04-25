@@ -45,11 +45,11 @@ const POSContent: React.FC = () => {
   return (
     <div className="flex flex-col gap-6 max-w-[1600px] mx-auto animate-in fade-in duration-500">
       {/* POS Top Control Panel */}
-      <div className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-wrap justify-between items-center gap-4">
+      <div className="bg-card p-6 rounded-[28px] border border-border shadow-sm flex flex-wrap justify-between items-center gap-4">
         <div className="flex items-center gap-6">
           <div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+            <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground">
                 <ScanBarcode className="w-4 h-4" />
               </div>
               POS Terminal
@@ -57,7 +57,7 @@ const POSContent: React.FC = () => {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Operator: {user?.name || 'User'}</p>
           </div>
 
-          <div className="h-10 w-[1px] bg-slate-100" />
+          <div className="h-10 w-[1px] bg-slate-800" />
 
           {/* Held Carts quick access */}
           <div className="flex gap-3 overflow-x-auto py-1 max-w-[400px] no-scrollbar">
@@ -116,13 +116,13 @@ const POSContent: React.FC = () => {
           )}
 
           {/* Search Section */}
-          <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm relative overflow-visible">
+          <div className="bg-card p-8 rounded-[32px] border border-border shadow-sm relative overflow-visible">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                 <Search className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-slate-900">Product Search</h2>
+                <h2 className="text-xl font-black text-white">Product Search</h2>
                 <p className="text-xs text-slate-400 font-medium">Add items by name, barcode or SKU</p>
               </div>
             </div>
@@ -130,11 +130,11 @@ const POSContent: React.FC = () => {
           </div>
           
           {/* Cart Section */}
-          <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm flex flex-col overflow-hidden">
-            <div className="px-8 py-6 border-b flex justify-between items-center bg-slate-50/50">
-              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+          <div className="bg-card rounded-[32px] border border-border shadow-sm flex flex-col overflow-hidden">
+            <div className="px-8 py-6 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+              <h2 className="text-lg font-black text-white flex items-center gap-2">
                 Cart Items 
-                <span className="text-xs bg-primary text-white px-2 py-0.5 rounded-full">{items.length}</span>
+                <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full">{items.length}</span>
               </h2>
               <Button variant="ghost" size="sm" onClick={clearCart} className="text-slate-400 hover:text-red-500 hover:bg-red-50 font-bold text-[10px] uppercase tracking-widest">
                 Clear All

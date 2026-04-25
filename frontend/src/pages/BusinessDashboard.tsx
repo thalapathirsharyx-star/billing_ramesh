@@ -46,14 +46,14 @@ const BusinessDashboard: React.FC = () => {
     }
   };
 
-  const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444'];
+  const COLORS = ['#22D3EE', '#22C55E', '#FACC15', '#EF4444'];
 
   const kpis = [
     { 
       title: "Today's Revenue", 
       value: `₹${stats?.todayRevenue?.toLocaleString() || 0}`, 
       icon: Banknote, 
-      color: "bg-indigo-500", 
+      color: "bg-cyan-500/20 text-cyan-500", 
       trend: "+12.5%", 
       isUp: true 
     },
@@ -61,7 +61,7 @@ const BusinessDashboard: React.FC = () => {
       title: "Net Profit", 
       value: `₹${stats?.totalProfit?.toLocaleString() || 0}`, 
       icon: TrendingUp, 
-      color: "bg-emerald-500", 
+      color: "bg-emerald-500/20 text-emerald-500", 
       trend: `${((stats?.totalProfit / (stats?.totalRevenue || 1)) * 100).toFixed(1)}% Margin`, 
       isUp: true 
     },
@@ -69,7 +69,7 @@ const BusinessDashboard: React.FC = () => {
       title: "Total Investment", 
       value: `₹${stats?.totalInvestment?.toLocaleString() || 0}`, 
       icon: Package, 
-      color: "bg-rose-500", 
+      color: "bg-rose-500/20 text-rose-500", 
       trend: "Cost of Goods", 
       isUp: false 
     },
@@ -77,7 +77,7 @@ const BusinessDashboard: React.FC = () => {
       title: "Total Customers", 
       value: stats?.totalCustomers || 0, 
       icon: Users, 
-      color: "bg-amber-500", 
+      color: "bg-amber-500/20 text-amber-500", 
       trend: "+3.2%", 
       isUp: true 
     },
@@ -85,7 +85,7 @@ const BusinessDashboard: React.FC = () => {
       title: "Total Invoices", 
       value: stats?.totalInvoices || 0, 
       icon: ShoppingBag, 
-      color: "bg-blue-500", 
+      color: "bg-blue-500/20 text-blue-500", 
       trend: "+8.4%", 
       isUp: true 
     },
@@ -93,7 +93,7 @@ const BusinessDashboard: React.FC = () => {
       title: "Active Products", 
       value: stats?.totalProducts || 0, 
       icon: Box, 
-      color: "bg-slate-700", 
+      color: "bg-slate-500/20 text-slate-400", 
       trend: "Inventory", 
       isUp: true 
     },
@@ -102,14 +102,14 @@ const BusinessDashboard: React.FC = () => {
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-8 pb-20">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card p-8 rounded-[32px] border border-border shadow-sm">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Business Intelligence</h1>
-          <p className="text-muted-foreground text-sm font-medium">Real-time overview of your store's performance</p>
+          <h1 className="text-3xl font-black text-white tracking-tight">Business Intelligence</h1>
+          <p className="text-slate-400 text-sm font-medium">Real-time overview of your store's performance</p>
         </div>
-        <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
+        <div className="flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-2xl border border-border">
           <Calendar className="w-4 h-4 text-slate-400" />
-          <span className="text-xs font-black text-slate-600 uppercase tracking-widest">
+          <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
             {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
           </span>
         </div>
@@ -123,20 +123,20 @@ const BusinessDashboard: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-white p-6 rounded-[32px] border border-slate-100 shadow-sm hover:shadow-md transition-all group"
+            className="bg-card p-6 rounded-[32px] border border-border shadow-sm hover:shadow-md transition-all group"
           >
             <div className="flex justify-between items-start mb-4">
-              <div className={`${kpi.color} p-3 rounded-2xl text-white shadow-lg shadow-current/20 group-hover:scale-110 transition-transform`}>
+              <div className={`${kpi.color} p-3 rounded-2xl shadow-lg shadow-current/5 group-hover:scale-110 transition-transform`}>
                 <kpi.icon className="w-6 h-6" />
               </div>
-              <div className={`flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-full ${kpi.isUp ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+              <div className={`flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-full ${kpi.isUp ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
                 {kpi.isUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
                 {kpi.trend}
               </div>
             </div>
             <div className="space-y-1">
-              <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{kpi.title}</div>
-              <div className="text-2xl font-black text-slate-900">{kpi.value}</div>
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{kpi.title}</div>
+              <div className="text-2xl font-black text-white">{kpi.value}</div>
             </div>
           </motion.div>
         ))}
@@ -144,21 +144,21 @@ const BusinessDashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Sales Trend Chart */}
-        <div className="lg:col-span-2 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
+        <div className="lg:col-span-2 bg-card p-8 rounded-[32px] border border-border shadow-sm">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h3 className="text-xl font-black text-slate-900">Weekly Revenue Trend</h3>
-              <p className="text-xs text-muted-foreground font-medium">Sales performance over the last 7 days</p>
+              <h3 className="text-xl font-black text-white">Weekly Revenue Trend</h3>
+              <p className="text-xs text-slate-400 font-medium">Sales performance over the last 7 days</p>
             </div>
-            <TrendingUp className="w-5 h-5 text-indigo-500" />
+            <TrendingUp className="w-5 h-5 text-cyan-500" />
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={trend}>
                 <defs>
                   <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#22D3EE" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#22D3EE" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -182,7 +182,7 @@ const BusinessDashboard: React.FC = () => {
                 <Area 
                   type="monotone" 
                   dataKey="amount" 
-                  stroke="#6366f1" 
+                  stroke="#22D3EE" 
                   strokeWidth={4}
                   fillOpacity={1} 
                   fill="url(#colorAmount)" 
@@ -193,9 +193,9 @@ const BusinessDashboard: React.FC = () => {
         </div>
 
         {/* Payment Method Pie Chart */}
-        <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
-          <h3 className="text-xl font-black text-slate-900 mb-1">Payment Modes</h3>
-          <p className="text-xs text-muted-foreground font-medium mb-8">Transaction volume by method</p>
+        <div className="bg-card p-8 rounded-[32px] border border-border shadow-sm">
+          <h3 className="text-xl font-black text-white mb-1">Payment Modes</h3>
+          <p className="text-xs text-slate-400 font-medium mb-8">Transaction volume by method</p>
           <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -218,12 +218,12 @@ const BusinessDashboard: React.FC = () => {
           </div>
           <div className="space-y-3 mt-4">
             {breakdown.map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">
+              <div key={i} className="flex items-center justify-between p-3 rounded-2xl bg-slate-900 border border-slate-800">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
-                  <span className="text-xs font-black text-slate-600 uppercase tracking-widest">{item.name}</span>
+                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{item.name}</span>
                 </div>
-                <span className="text-xs font-black text-slate-900">{item.value} Trans.</span>
+                <span className="text-xs font-black text-white">{item.value} Trans.</span>
               </div>
             ))}
           </div>
@@ -231,11 +231,11 @@ const BusinessDashboard: React.FC = () => {
       </div>
 
       {/* Profitability Analysis Section */}
-      <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
+      <div className="bg-card p-8 rounded-[32px] border border-border shadow-sm">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h3 className="text-xl font-black text-slate-900">Profitability Analysis</h3>
-            <p className="text-xs text-muted-foreground font-medium">Comparison of Revenue, Investment, and Net Profit</p>
+            <h3 className="text-xl font-black text-white">Profitability Analysis</h3>
+            <p className="text-xs text-slate-400 font-medium">Comparison of Revenue, Investment, and Net Profit</p>
           </div>
           <TrendingUp className="w-5 h-5 text-emerald-500" />
         </div>
@@ -244,31 +244,31 @@ const BusinessDashboard: React.FC = () => {
           <div className="md:col-span-3 h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={[
-                { name: 'Revenue', amount: stats?.totalRevenue || 0, color: '#6366f1' },
-                { name: 'Investment', amount: stats?.totalInvestment || 0, color: '#ef4444' },
-                { name: 'Profit', amount: stats?.totalProfit || 0, color: '#10b981' }
+                { name: 'Revenue', amount: stats?.totalRevenue || 0, color: '#22D3EE' },
+                { name: 'Investment', amount: stats?.totalInvestment || 0, color: '#EF4444' },
+                { name: 'Profit', amount: stats?.totalProfit || 0, color: '#22C55E' }
               ]}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900 }} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e293b" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: '#94a3b8' }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: '#94a3b8' }} />
                 <Tooltip />
-                <Area type="monotone" dataKey="amount" stroke="#6366f1" fill="#6366f1" fillOpacity={0.1} strokeWidth={4} />
+                <Area type="monotone" dataKey="amount" stroke="#22D3EE" fill="#22D3EE" fillOpacity={0.1} strokeWidth={4} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
           
           <div className="space-y-6">
-            <div className="p-4 rounded-2xl bg-indigo-50 border border-indigo-100">
-              <div className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">Revenue</div>
-              <div className="text-xl font-black text-indigo-700">₹{stats?.totalRevenue?.toLocaleString()}</div>
+            <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
+              <div className="text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-1">Revenue</div>
+              <div className="text-xl font-black text-cyan-500">₹{stats?.totalRevenue?.toLocaleString()}</div>
             </div>
-            <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100">
+            <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20">
               <div className="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-1">Investment</div>
-              <div className="text-xl font-black text-rose-700">₹{stats?.totalInvestment?.toLocaleString()}</div>
+              <div className="text-xl font-black text-rose-500">₹{stats?.totalInvestment?.toLocaleString()}</div>
             </div>
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
+            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
               <div className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Net Profit</div>
-              <div className="text-xl font-black text-emerald-700">₹{stats?.totalProfit?.toLocaleString()}</div>
+              <div className="text-xl font-black text-emerald-500">₹{stats?.totalProfit?.toLocaleString()}</div>
             </div>
           </div>
         </div>

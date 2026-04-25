@@ -76,8 +76,8 @@ export const NavItem = ({ item, isActive, isCollapsed = false, isMobile = false,
     className={cn(
       "group flex items-center rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-300 relative overflow-hidden",
       isActive
-        ? "bg-[#31203d] text-[#E04FB2]"
-        : "text-white/60 hover:bg-[#252541] hover:text-white",
+        ? "bg-primary/10 text-primary"
+        : "text-slate-400 hover:bg-white/5 hover:text-white",
       isCollapsed ? "justify-center" : "",
       isMobile ? "py-3 px-4" : ""
     )}
@@ -86,8 +86,8 @@ export const NavItem = ({ item, isActive, isCollapsed = false, isMobile = false,
       className={cn(
         "shrink-0 transition-all duration-300",
         isActive
-          ? "text-[#E04FB2] scale-110"
-          : "text-white/40 group-hover:text-white group-hover:scale-110",
+          ? "text-primary scale-110"
+          : "text-slate-500 group-hover:text-white group-hover:scale-110",
         isCollapsed ? "h-6 w-6" : "mr-3 h-4 w-4",
         isMobile ? "h-5 w-5 mr-4" : ""
       )}
@@ -170,7 +170,7 @@ export function Sidebar() {
       <motion.div
         initial={false}
         animate={{ width: isCollapsed ? 80 : 256 }}
-        className="flex h-screen flex-col  bg-[linear-gradient(180deg,#2a1e38,#291e38,#281d37,#271d37,#261d36,#251d35,#231c34,#1d1b2f,#1a1a2e)] backdrop-blur-xl pt-6 pb-4 relative transition-all duration-300 ease-in-out z-50"
+        className="flex h-screen flex-col bg-slate-950 border-r border-slate-900/50 backdrop-blur-xl pt-6 pb-4 relative transition-all duration-300 ease-in-out z-50"
       >
         <Button
           variant="ghost"

@@ -99,8 +99,8 @@ const CustomersPage: React.FC = () => {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-black tracking-tight">Customer Relationship</h1>
-          <p className="text-muted-foreground">Manage your customer database and purchase history</p>
+          <h1 className="text-3xl font-black text-white tracking-tight">Customer Relationship</h1>
+          <p className="text-slate-400">Manage your customer database and purchase history</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="icon" onClick={handleSyncStats} disabled={isLoading} title="Sync Statistics">
@@ -118,7 +118,7 @@ const CustomersPage: React.FC = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input 
             placeholder="Search by name, phone or email..." 
-            className="pl-10"
+            className="pl-10 h-12 rounded-2xl bg-slate-900 border-none focus:bg-slate-950 text-white font-medium"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

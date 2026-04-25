@@ -143,12 +143,12 @@ const ProductsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm p-4 mb-6">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm p-4 mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input 
             placeholder="Search by name, SKU or barcode..." 
-            className="pl-10 border-none bg-slate-50 rounded-2xl h-12 font-medium"
+            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-medium text-white"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

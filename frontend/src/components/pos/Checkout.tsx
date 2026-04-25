@@ -222,13 +222,13 @@ const Checkout: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+    <div className="flex flex-col h-full bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
       <div className="p-8 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
             <ReceiptText className="w-5 h-5" />
           </div>
-          <h3 className="text-xl font-black text-slate-900">Checkout</h3>
+          <h3 className="text-xl font-black text-white">Checkout</h3>
         </div>
 
         {/* Customer Section */}
@@ -240,14 +240,14 @@ const Checkout: React.FC = () => {
               placeholder="Enter mobile number..." 
               value={phone}
               onChange={handlePhoneChange}
-              className="h-12 px-5 rounded-xl bg-slate-50 border-slate-200 focus:bg-white transition-all"
+              className="h-12 px-5 rounded-xl bg-slate-900 border-slate-800 focus:bg-slate-950 transition-all text-white"
             />
           </div>
           <Input 
             placeholder="Customer name (optional)" 
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
-            className="h-10 px-5 rounded-xl bg-slate-50 border-slate-200 focus:bg-white transition-all text-sm"
+            className="h-10 px-5 rounded-xl bg-slate-900 border-slate-800 focus:bg-slate-950 transition-all text-sm text-white"
           />
           {customer && (
             <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10 animate-in fade-in slide-in-from-top-2">
@@ -256,7 +256,7 @@ const Checkout: React.FC = () => {
                   {customer.name.charAt(0)}
                 </div>
                 <div>
-                  <div className="text-sm font-black text-slate-900">{customer.name}</div>
+                  <div className="text-sm font-black text-white">{customer.name}</div>
                   <div className="text-[10px] font-bold text-primary uppercase tracking-wider">Loyalty: ₹{customer.total_purchases?.toLocaleString() || 0}</div>
                 </div>
               </div>
@@ -281,8 +281,8 @@ const Checkout: React.FC = () => {
                   onClick={() => setPaymentMethod(method.id)}
                   className={`flex flex-col items-center justify-center h-20 rounded-2xl border-2 transition-all gap-1 ${
                     paymentMethod === method.id 
-                    ? 'border-primary bg-primary/5 text-primary' 
-                    : 'border-slate-100 bg-slate-50 text-slate-400 hover:border-slate-200'
+                    ? 'border-primary bg-primary/10 text-primary shadow-[0_0_20px_rgba(34,211,238,0.2)]' 
+                    : 'border-slate-800 bg-slate-900 text-slate-500 hover:border-slate-700'
                   }`}
                 >
                   <method.icon className="w-5 h-5" />
@@ -297,7 +297,7 @@ const Checkout: React.FC = () => {
               <div>
                 <Label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2 block">Settlement Bank</Label>
                 <Select value={bankAccountId} onValueChange={setBankAccountId}>
-                  <SelectTrigger className="rounded-xl bg-slate-50 border-slate-200">
+                  <SelectTrigger className="rounded-xl bg-slate-900 border-slate-800 text-white">
                     <SelectValue placeholder="Select Bank..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -315,7 +315,7 @@ const Checkout: React.FC = () => {
                     placeholder="Enter Ref Number..." 
                     value={upiReference}
                     onChange={(e) => setUpiReference(e.target.value)}
-                    className="h-10 pl-10 rounded-xl bg-slate-50 border-slate-200 text-xs"
+                    className="h-10 pl-10 rounded-xl bg-slate-900 border-slate-800 text-xs text-white"
                   />
                 </div>
               </div>
@@ -331,7 +331,7 @@ const Checkout: React.FC = () => {
                 placeholder={`Full Amount (₹${finalTotal.toLocaleString()})`}
                 value={paidAmount || ''}
                 onChange={(e) => setPaidAmount(parseFloat(e.target.value) || 0)}
-                className="h-12 pl-12 rounded-xl bg-slate-50 border-slate-200 font-black text-lg focus:bg-white"
+                className="h-12 pl-12 rounded-xl bg-slate-900 border-slate-800 font-black text-lg focus:bg-slate-950 text-white"
               />
             </div>
             {paidAmount !== null && paidAmount < finalTotal && (

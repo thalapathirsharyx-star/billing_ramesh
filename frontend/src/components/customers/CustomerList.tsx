@@ -30,7 +30,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, onEdit, onShowHi
     <div className="rounded-[32px] border bg-card overflow-hidden shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-50/50 hover:bg-slate-50/50 border-b">
+          <TableRow className="bg-slate-900/50 hover:bg-slate-900/50 border-slate-800">
             <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-5">Name</TableHead>
             <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-5">Phone</TableHead>
             <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-5">Email</TableHead>
@@ -43,14 +43,14 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, onEdit, onShowHi
           {customers.map((customer) => (
             <TableRow 
               key={customer.id} 
-              className="group cursor-pointer hover:bg-primary/5 transition-colors"
+              className="group cursor-pointer hover:bg-white/5 border-slate-800 transition-colors"
               onClick={() => onShowHistory(customer)}
             >
-              <TableCell className="py-4 font-black text-slate-900">{customer.name}</TableCell>
-              <TableCell className="py-4 font-bold text-slate-600">{customer.phone}</TableCell>
+              <TableCell className="py-4 font-black text-white">{customer.name}</TableCell>
+              <TableCell className="py-4 font-bold text-slate-400">{customer.phone}</TableCell>
               <TableCell className="py-4 text-slate-500">{customer.email || '-'}</TableCell>
               <TableCell className="py-4">
-                <span className="bg-slate-100 text-slate-900 px-3 py-1 rounded-full text-xs font-black">
+                <span className="bg-slate-800 text-cyan-400 px-3 py-1 rounded-full text-xs font-black border border-cyan-500/20">
                   {customer.total_invoices || 0}
                 </span>
               </TableCell>
@@ -73,7 +73,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, onEdit, onShowHi
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="w-9 h-9 rounded-xl hover:bg-slate-100 transition-all"
+                  className="w-9 h-9 rounded-xl hover:bg-white/10 transition-all"
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit(customer);

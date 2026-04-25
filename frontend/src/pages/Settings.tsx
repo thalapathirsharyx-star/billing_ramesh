@@ -163,16 +163,16 @@ export default function Settings() {
       </div>
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="w-full h-auto p-1 bg-[#FFF5EB] dark:bg-zinc-950/20 border-b border-[#f0e8e2] dark:border-zinc-800 mb-6 sm:mb-8 flex gap-2 sm:gap-6 overflow-x-auto scrollbar-none justify-start px-1 items-center no-scrollbar">
+        <TabsList className="w-full h-auto p-1 bg-slate-900/50 border-b border-border mb-6 sm:mb-8 flex gap-2 sm:gap-6 overflow-x-auto scrollbar-none justify-start px-1 items-center no-scrollbar">
           <TabsTrigger
             value="general"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 rounded-full px-4 py-2.5 text-xs sm:text-sm text-muted-foreground data-[state=active]:text-black dark:data-[state=active]:text-white transition-all flex items-center gap-2 font-bold whitespace-nowrap shadow-sm border border-transparent data-[state=active]:border-[#f0e8e2]/50"
+            className="data-[state=active]:bg-zinc-800 rounded-full px-4 py-2.5 text-xs sm:text-sm text-slate-400 data-[state=active]:text-white transition-all flex items-center gap-2 font-bold whitespace-nowrap shadow-sm border border-transparent data-[state=active]:border-primary/20"
           >
             <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> General
           </TabsTrigger>
           <TabsTrigger
             value="security"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 rounded-full px-4 py-2.5 text-xs sm:text-sm text-muted-foreground data-[state=active]:text-black dark:data-[state=active]:text-white transition-all flex items-center gap-2 font-bold whitespace-nowrap shadow-sm border border-transparent data-[state=active]:border-[#f0e8e2]/50"
+            className="data-[state=active]:bg-zinc-800 rounded-full px-4 py-2.5 text-xs sm:text-sm text-slate-400 data-[state=active]:text-white transition-all flex items-center gap-2 font-bold whitespace-nowrap shadow-sm border border-transparent data-[state=active]:border-primary/20"
           >
             <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Security
           </TabsTrigger>
@@ -185,14 +185,14 @@ export default function Settings() {
           className="w-full"
         >
           <TabsContent value="general" className="space-y-4 sm:space-y-6 mt-0">
-            <Card className="glass-card border-[#f0e8e2]/50">
+            <Card className="glass-card border-border bg-card">
               <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-4">
                 <CardTitle className="text-lg sm:text-xl">Profile Information</CardTitle>
                 <CardDescription className="text-xs sm:text-sm">Update your personal details.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6 p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                  <Avatar className="h-24 w-24 sm:h-20 sm:w-20 ring-4 ring-white/50 shadow-lg">
+                  <Avatar className="h-24 w-24 sm:h-20 sm:w-20 ring-4 ring-slate-800 shadow-lg">
                     <AvatarImage src="/avatars/01.png" />
                     <AvatarFallback className="bg-primary/20 text-primary text-2xl sm:text-xl">
                       {user?.firstName?.[0]}
@@ -281,7 +281,7 @@ export default function Settings() {
               </CardContent>
             </Card>
 
-            <Card className="glass-card border-[#f0e8e2]/50">
+            <Card className="glass-card border-border bg-card">
               <CardHeader className="p-4 sm:p-6 pb-2">
                 <CardTitle className="text-lg sm:text-xl">Preferences</CardTitle>
               </CardHeader>
@@ -311,7 +311,7 @@ export default function Settings() {
 
 
           <TabsContent value="security" className="space-y-4 sm:space-y-6 mt-0">
-            <Card className="glass-card border-[#f0e8e2]/50">
+            <Card className="glass-card border-border bg-card">
               <CardHeader className="p-4 sm:p-6 pb-2">
                 <CardTitle className="text-lg sm:text-xl font-bold">Password</CardTitle>
                 <CardDescription className="text-xs sm:text-sm">
@@ -362,7 +362,7 @@ export default function Settings() {
               </CardContent>
             </Card>
 
-            <Card className="glass-card border-[#f0e8e2]/50">
+            <Card className="glass-card border-border bg-card">
               <CardHeader className="p-4 sm:p-6 pb-2">
                 <CardTitle className="text-lg sm:text-xl font-bold">Two-Factor Authentication</CardTitle>
                 <CardDescription className="text-xs sm:text-sm">
@@ -370,7 +370,7 @@ export default function Settings() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl border border-[#f0e8e2]/50 bg-white/40 dark:bg-white/5 gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl border border-border bg-slate-900/50 gap-4">
                   <div className="text-center sm:text-left">
                     <p className="font-bold">2FA Status</p>
                     <p className="text-xs text-muted-foreground font-medium">

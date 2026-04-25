@@ -21,7 +21,7 @@ const InventoryList: React.FC<InventoryListProps> = ({ products, onAdjust, onVie
     <div className="rounded-xl border bg-card overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-muted/50">
+          <TableRow className="bg-slate-900/50 border-slate-800">
             <TableHead>Product</TableHead>
             <TableHead>SKU</TableHead>
             <TableHead>Current Stock</TableHead>
@@ -33,19 +33,19 @@ const InventoryList: React.FC<InventoryListProps> = ({ products, onAdjust, onVie
           {products.map((product) => (
             <TableRow key={product.id}>
               <TableCell>
-                <div className="font-semibold">{product.name}</div>
-                <div className="text-xs text-muted-foreground">{product.category}</div>
+                <div className="font-semibold text-white">{product.name}</div>
+                <div className="text-xs text-slate-400">{product.category}</div>
               </TableCell>
               <TableCell className="font-mono text-xs">{product.sku}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
                   <span className={`text-lg font-bold ${
-                    product.quantity_in_stock <= 5 ? 'text-red-600' : 'text-foreground'
+                    product.quantity_in_stock <= 5 ? 'text-red-500' : 'text-white'
                   }`}>
                     {product.quantity_in_stock}
                   </span>
                   {product.quantity_in_stock <= 5 && (
-                    <span className="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold uppercase">Low</span>
+                    <span className="text-[10px] bg-red-500/10 text-red-500 px-2 py-0.5 rounded-full font-bold uppercase border border-red-500/20">Low</span>
                   )}
                 </div>
               </TableCell>

@@ -53,7 +53,7 @@ const InvoicesPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-8 bg-brand-bg min-h-screen">
+    <div className="p-6 max-w-7xl mx-auto space-y-8 min-h-screen">
       {/* Header */}
       <div className="page-header-brand">
         <div className="flex items-center gap-4">
@@ -72,11 +72,11 @@ const InvoicesPage: React.FC = () => {
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm space-y-6"
+          className="bg-card p-8 rounded-[32px] border border-border shadow-sm space-y-6"
         >
           <div className="flex items-center gap-3 mb-4">
             <Layout className="w-5 h-5 text-primary" />
-            <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Template Details</h3>
+            <h3 className="text-xl font-black text-white uppercase tracking-tight">Template Details</h3>
           </div>
 
           <div className="grid grid-cols-1 gap-6">
@@ -87,7 +87,7 @@ const InvoicesPage: React.FC = () => {
                 <Input 
                   value={companySettings.name}
                   onChange={(e) => setCompanySettings({...companySettings, name: e.target.value})}
-                  className="pl-10 h-12 bg-slate-50 border-none rounded-2xl focus:bg-white transition-all font-bold"
+                  className="pl-10 h-12 bg-slate-900 border-none rounded-2xl focus:bg-slate-950 transition-all font-bold text-white"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ const InvoicesPage: React.FC = () => {
                 value={companySettings.website || ''} 
                 placeholder="Legal Entity Name"
                 onChange={(e) => setCompanySettings({...companySettings, website: e.target.value})}
-                className="h-12 bg-slate-50 border-none rounded-2xl focus:bg-white transition-all font-bold"
+                className="h-12 bg-slate-900 border-none rounded-2xl focus:bg-slate-950 transition-all font-bold text-white"
               />
             </div>
 
@@ -109,7 +109,7 @@ const InvoicesPage: React.FC = () => {
                 <Input 
                   value={companySettings.uen_no}
                   onChange={(e) => setCompanySettings({...companySettings, uen_no: e.target.value})}
-                  className="pl-10 h-12 bg-slate-50 border-none rounded-2xl focus:bg-white transition-all font-bold"
+                  className="pl-10 h-12 bg-slate-900 border-none rounded-2xl focus:bg-slate-950 transition-all font-bold text-white"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ const InvoicesPage: React.FC = () => {
                 <Input 
                   value={companySettings.address}
                   onChange={(e) => setCompanySettings({...companySettings, address: e.target.value})}
-                  className="pl-10 h-12 bg-slate-50 border-none rounded-2xl focus:bg-white transition-all font-bold"
+                  className="pl-10 h-12 bg-slate-900 border-none rounded-2xl focus:bg-slate-950 transition-all font-bold text-white"
                 />
               </div>
             </div>
@@ -133,7 +133,7 @@ const InvoicesPage: React.FC = () => {
                 <Input 
                   value={companySettings.telephone_no}
                   onChange={(e) => setCompanySettings({...companySettings, telephone_no: e.target.value})}
-                  className="pl-10 h-12 bg-slate-50 border-none rounded-2xl focus:bg-white transition-all font-bold"
+                  className="pl-10 h-12 bg-slate-900 border-none rounded-2xl focus:bg-slate-950 transition-all font-bold text-white"
                 />
               </div>
             </div>
@@ -143,7 +143,7 @@ const InvoicesPage: React.FC = () => {
               <textarea 
                 value={companySettings.invoice_footer}
                 onChange={(e) => setCompanySettings({...companySettings, invoice_footer: e.target.value})}
-                className="w-full min-h-[100px] p-4 bg-slate-50 border-none rounded-2xl focus:bg-white transition-all font-bold text-xs"
+                className="w-full min-h-[100px] p-4 bg-slate-900 border-none rounded-2xl focus:bg-slate-950 transition-all font-bold text-xs text-white"
                 placeholder="*All Offers are subject to applicable T&C..."
               />
             </div>
@@ -175,7 +175,7 @@ const InvoicesPage: React.FC = () => {
                         newCf[idx].key = e.target.value;
                         setCompanySettings({...companySettings, custom_fields: newCf});
                       }}
-                      className="flex-1 h-10 bg-slate-50 border-none rounded-xl text-xs font-bold"
+                      className="flex-1 h-10 bg-slate-900 border-none rounded-xl text-xs font-bold text-white"
                     />
                     <Input 
                       placeholder="Value" 
@@ -185,7 +185,7 @@ const InvoicesPage: React.FC = () => {
                         newCf[idx].value = e.target.value;
                         setCompanySettings({...companySettings, custom_fields: newCf});
                       }}
-                      className="flex-[2] h-10 bg-slate-50 border-none rounded-xl text-xs font-bold"
+                      className="flex-[2] h-10 bg-slate-900 border-none rounded-xl text-xs font-bold text-white"
                     />
                     <Button 
                       variant="ghost" 
@@ -217,10 +217,10 @@ const InvoicesPage: React.FC = () => {
         >
           <div className="flex items-center gap-3 mb-2 px-4">
             <Eye className="w-5 h-5 text-emerald-500" />
-            <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Live Preview</h3>
+            <h3 className="text-xl font-black text-white uppercase tracking-tight">Live Preview</h3>
           </div>
           
-          <div className="bg-white border-8 border-slate-200 rounded-[32px] p-8 aspect-[1/1.4] shadow-2xl overflow-y-auto pointer-events-none select-none custom-scrollbar">
+          <div className="bg-white border-8 border-slate-900 rounded-[32px] p-8 aspect-[1/1.4] shadow-2xl overflow-y-auto pointer-events-none select-none custom-scrollbar">
             <div className="text-center space-y-1.5 mb-6">
               <div className="text-2xl font-black text-slate-900 uppercase tracking-tighter mb-1">{companySettings.name || 'ZUDIO'}</div>
               <div className="text-[9px] font-bold text-slate-500 uppercase">{companySettings.website || 'Legal Entity Name'}</div>

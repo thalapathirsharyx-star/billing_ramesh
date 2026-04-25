@@ -118,7 +118,7 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto min-h-screen bg-brand-bg">
+    <div className="p-6 max-w-4xl mx-auto min-h-screen">
       <div className="page-header-brand flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">{title}</h1>
@@ -128,31 +128,31 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
           <Button variant="outline" size="icon" className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-xl" onClick={fetchItems} disabled={isLoading}>
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
-          <Button className="btn-brand bg-white text-brand-primary hover:bg-blue-50 border-none" onClick={handleAddItem}>
+          <Button className="btn-brand bg-primary text-primary-foreground hover:bg-primary/90 border-none" onClick={handleAddItem}>
             <Plus className="w-4 h-4 mr-2" />
             Add {itemName}
           </Button>
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm p-4 mb-6">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm p-4 mb-6">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <Input 
             placeholder={`Search ${itemName}s...`} 
-            className="pl-10 border-none bg-slate-50 rounded-2xl h-12 font-medium"
+            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-medium text-white"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
         <Table>
-          <TableHeader className="bg-slate-50/50">
-            <TableRow className="hover:bg-transparent border-slate-100">
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 pl-6">Name</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right pr-6">Actions</TableHead>
+          <TableHeader className="bg-slate-900/50">
+            <TableRow className="hover:bg-transparent border-slate-800">
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 pl-6">Name</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right pr-6">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -162,14 +162,14 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
               <TableRow><TableCell colSpan={2} className="text-center py-10 text-muted-foreground">No {itemName}s found</TableCell></TableRow>
             ) : (
               filteredItems.map((item) => (
-                <TableRow key={item.id} className="hover:bg-slate-50/50 border-slate-50 transition-colors">
-                  <TableCell className="font-bold text-slate-700 py-4 pl-6">{item.name}</TableCell>
+                <TableRow key={item.id} className="hover:bg-white/5 border-slate-800 transition-colors">
+                  <TableCell className="font-bold text-white py-4 pl-6">{item.name}</TableCell>
                   <TableCell className="text-right py-4 pr-6">
                     <div className="flex justify-end gap-2">
-                      <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/5" onClick={() => handleEditItem(item)}>
+                      <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl text-slate-500 hover:text-primary hover:bg-primary/10" onClick={() => handleEditItem(item)}>
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50" onClick={() => handleDeleteItem(item.id)}>
+                      <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl text-slate-500 hover:text-red-500 hover:bg-red-500/10" onClick={() => handleDeleteItem(item.id)}>
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
@@ -182,21 +182,21 @@ const MasterPageTemplate: React.FC<MasterPageTemplateProps> = ({
       </div>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-w-md rounded-[32px]">
+        <DialogContent className="max-w-md rounded-[32px] bg-card border-border">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-black text-slate-900">
+            <DialogTitle className="text-2xl font-black text-white">
               {editingItem ? `Edit ${itemName}` : `Add New ${itemName}`}
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleFormSubmit} className="space-y-6 pt-4">
             <div className="space-y-2">
               <label className="text-[10px] uppercase tracking-widest font-black text-slate-400 ml-1">{itemName} Name</label>
-              <Input 
+                <Input 
                 autoFocus
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
                 placeholder={`e.g. ${itemName === 'Category' ? "Men's Wear" : 'XL'}`}
-                className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:bg-white text-lg font-bold"
+                className="h-12 rounded-2xl bg-slate-900 border-slate-800 focus:bg-slate-950 text-white text-lg font-bold"
               />
             </div>
             <DialogFooter className="pt-2">

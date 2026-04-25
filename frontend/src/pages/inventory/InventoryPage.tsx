@@ -78,8 +78,8 @@ const InventoryPage: React.FC = () => {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-black tracking-tight">Stock Control</h1>
-          <p className="text-muted-foreground">Monitor and adjust inventory levels across your store</p>
+          <h1 className="text-3xl font-black text-white tracking-tight">Stock Control</h1>
+          <p className="text-slate-400">Monitor and adjust inventory levels across your store</p>
         </div>
         <Button variant="outline" size="icon" onClick={fetchData} disabled={isLoading}>
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -97,20 +97,21 @@ const InventoryPage: React.FC = () => {
           </div>
         </div>
         
-        <div className={`bg-card p-6 rounded-2xl border shadow-sm flex items-center gap-4 ${lowStockCount > 0 ? 'border-red-200 bg-red-50' : ''}`}>
-          <div className={`p-3 rounded-xl ${lowStockCount > 0 ? 'bg-red-100 text-red-700' : 'bg-muted text-muted-foreground'}`}>
+        <div className={`bg-card p-6 rounded-2xl border shadow-sm flex items-center gap-4 ${lowStockCount > 0 ? 'border-red-500/50 bg-red-500/5' : ''}`}>
+          <div className={`p-3 rounded-xl ${lowStockCount > 0 ? 'bg-red-500/10 text-red-500' : 'bg-muted text-muted-foreground'}`}>
             <AlertTriangle className="w-6 h-6" />
           </div>
           <div>
             <div className="text-sm text-muted-foreground font-medium uppercase tracking-wider">Low Stock Alerts</div>
-            <div className={`text-2xl font-bold ${lowStockCount > 0 ? 'text-red-700' : ''}`}>{lowStockCount} Items</div>
+            <div className={`text-2xl font-bold ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}>{lowStockCount} Items</div>
           </div>
         </div>
       </div>
 
-      <div className="bg-card rounded-2xl border shadow-sm p-4 mb-6">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-4 mb-6">
         <Input 
           placeholder="Search inventory by product name or SKU..." 
+          className="bg-slate-900 border-none rounded-xl h-12 text-white"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

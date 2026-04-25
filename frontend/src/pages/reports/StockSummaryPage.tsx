@@ -54,7 +54,7 @@ const StockSummaryPage: React.FC = () => {
   const lowStockCount = data?.items.filter((i: any) => i.quantity <= 5).length || 0;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-brand-bg">
+    <div className="p-6 max-w-7xl mx-auto min-h-screen">
       <div className="page-header-brand flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">Stock Valuation</h1>
@@ -68,47 +68,47 @@ const StockSummaryPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 text-blue-500"><Box size={80} /></div>
           <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Total Items in Stock</p>
-          <h3 className="text-4xl font-black text-slate-900">{data?.items.reduce((sum: number, i: any) => sum + i.quantity, 0).toLocaleString()}</h3>
+          <h3 className="text-4xl font-black text-white">{data?.items.reduce((sum: number, i: any) => sum + i.quantity, 0).toLocaleString()}</h3>
         </div>
         
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 text-emerald-500"><Landmark size={80} /></div>
           <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Inventory Valuation (CP)</p>
-          <h3 className="text-4xl font-black text-slate-900 text-emerald-600">₹{data?.total_stock_value.toLocaleString()}</h3>
+          <h3 className="text-4xl font-black text-emerald-400">₹{data?.total_stock_value.toLocaleString()}</h3>
         </div>
 
-        <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
+        <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-5 text-red-500"><AlertTriangle size={80} /></div>
           <p className="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-2">Low Stock Alerts</p>
-          <h3 className={`text-4xl font-black ${lowStockCount > 0 ? 'text-red-500' : 'text-slate-900'}`}>{lowStockCount}</h3>
+          <h3 className={`text-4xl font-black ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}>{lowStockCount}</h3>
           <p className="text-[10px] font-bold text-slate-400 mt-1">Items with qty ≤ 5</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm p-4 mb-6">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm p-4 mb-6">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <Input 
             placeholder="Search items or SKU..." 
-            className="pl-10 border-none bg-slate-50 rounded-2xl h-12 font-medium"
+            className="pl-10 border-none bg-slate-900 rounded-2xl h-12 font-medium text-white"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
         <Table>
-          <TableHeader className="bg-slate-50/50">
-            <TableRow className="hover:bg-transparent border-slate-100">
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 pl-6">Product</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4">Size/Cat</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-center">In Stock</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right">Cost Price</TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-400 py-4 text-right pr-6">Total Value</TableHead>
+          <TableHeader className="bg-slate-900/50">
+            <TableRow className="hover:bg-transparent border-slate-800">
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 pl-6">Product</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4">Size/Cat</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-center">In Stock</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right">Cost Price</TableHead>
+              <TableHead className="font-black text-[10px] uppercase tracking-widest text-slate-500 py-4 text-right pr-6">Total Value</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -118,22 +118,22 @@ const StockSummaryPage: React.FC = () => {
               <TableRow><TableCell colSpan={5} className="text-center py-20 text-muted-foreground">No stock data available</TableCell></TableRow>
             ) : (
               filteredItems.map((item) => (
-                <TableRow key={item.id} className="hover:bg-slate-50/50 border-slate-50 transition-colors">
+                <TableRow key={item.id} className="hover:bg-white/5 border-slate-800 transition-colors">
                   <TableCell className="py-4 pl-6">
-                    <div className="font-black text-slate-900">{item.name}</div>
-                    <div className="text-[10px] text-slate-400 font-bold">SKU: {item.sku}</div>
+                    <div className="font-black text-white">{item.name}</div>
+                    <div className="text-[10px] text-slate-500 font-bold">SKU: {item.sku}</div>
                   </TableCell>
                   <TableCell className="py-4">
-                    <div className="text-xs font-bold text-slate-600">{item.category}</div>
-                    <div className="text-[10px] text-slate-400 font-bold">Size: {item.size}</div>
+                    <div className="text-xs font-bold text-slate-400">{item.category}</div>
+                    <div className="text-[10px] text-slate-500 font-bold">Size: {item.size}</div>
                   </TableCell>
                   <TableCell className="text-center py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black ${item.quantity <= 5 ? 'bg-red-50 text-red-600' : 'bg-slate-100 text-slate-600'}`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black ${item.quantity <= 5 ? 'bg-red-500/10 text-red-500 border border-red-500/20' : 'bg-slate-800 text-slate-400'}`}>
                       {item.quantity}
                     </span>
                   </TableCell>
-                  <TableCell className="text-right font-medium text-slate-400 py-4">₹{item.purchase_price.toLocaleString()}</TableCell>
-                  <TableCell className="text-right pr-6 font-black text-slate-900 py-4">₹{item.stock_value.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-medium text-slate-500 py-4">₹{item.purchase_price.toLocaleString()}</TableCell>
+                  <TableCell className="text-right pr-6 font-black text-white py-4">₹{item.stock_value.toLocaleString()}</TableCell>
                 </TableRow>
               ))
             )}
